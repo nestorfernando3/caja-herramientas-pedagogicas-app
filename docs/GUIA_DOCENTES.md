@@ -15,7 +15,8 @@
 3. Envia el formulario.
 
 ## 3. Como se guarda tu aporte
-- Si el backend publico esta activo: se envia al repositorio y queda en `pending`.
+- Cada aporte abre un correo dirigido a `nestor.BDR@gmail.com` con la informacion completa para revision.
+- Si el backend publico esta activo: tambien se envia al repositorio y queda en `pending`.
 - Si necesitas conectar una API distinta, abre una vez la web con `?api=https://tu-backend`.
 - Si el backend no esta activo: se guarda localmente en tu navegador.
 
