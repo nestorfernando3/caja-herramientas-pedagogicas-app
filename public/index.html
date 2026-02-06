@@ -6,7 +6,10 @@
     <title>Caja de Herramientas Pedagogicas | Web App Colaborativa</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
@@ -15,13 +18,14 @@
 
     <header class="hero shell">
       <p class="badge">Repositorio Vivo Docente</p>
-      <h1>Caja de Herramientas Pedagogicas</h1>
-      <p class="hero-copy">
+      <h1 id="appTitle">Caja de Herramientas Pedagogicas</h1>
+      <p id="appSubtitle" class="hero-copy">
         Plataforma colaborativa para que los docentes compartan, revisen y publiquen estrategias pedagogicas.
       </p>
       <div class="hero-actions">
         <a href="#repositorio" class="button button-primary">Explorar repositorio</a>
         <a href="#contribuir" class="button button-ghost">Aportar herramienta</a>
+        <a href="#editorial" class="button button-ghost">Panel editorial</a>
       </div>
     </header>
 
@@ -36,8 +40,13 @@
             <select id="categoryFilter">
               <option value="">Todas las categorias</option>
             </select>
+            <select id="sortFilter">
+              <option value="recent">Mas reciente</option>
+              <option value="title">Titulo (A-Z)</option>
+            </select>
           </div>
         </div>
+        <p id="repositoryMessage" class="message"></p>
         <div id="categoriesContainer"></div>
       </section>
 
@@ -95,14 +104,48 @@
       <section id="editorial" class="panel">
         <div class="panel-head">
           <h2>Panel editorial</h2>
-          <p>Aprueba y publica contribuciones pendientes.</p>
+          <p>Aprueba aportes, crea categorias y exporta respaldo.</p>
         </div>
         <div class="editor-controls">
           <input id="adminKeyInput" type="password" placeholder="Clave de editor" />
           <button id="loginEditorBtn" class="button button-ghost" type="button">Activar modo editor</button>
           <button id="logoutEditorBtn" class="button button-ghost" type="button">Cerrar modo editor</button>
+          <button id="exportBtn" class="button button-ghost" type="button">Exportar JSON</button>
           <span id="editorStatus" class="editor-status">Modo editor: inactivo</span>
         </div>
+
+        <div id="adminSection" class="admin-section hidden">
+          <h3>Crear categoria</h3>
+          <form id="categoryForm" class="form-grid category-form">
+            <label>
+              Nombre
+              <input id="categoryName" minlength="3" required />
+            </label>
+            <label>
+              Color
+              <input id="categoryColor" type="color" value="#2a9d8f" required />
+            </label>
+            <label>
+              Posicion
+              <input id="categoryPosition" type="number" min="1" value="10" required />
+            </label>
+            <label>
+              Publicada
+              <select id="categoryPublished">
+                <option value="true">Si</option>
+                <option value="false">No</option>
+              </select>
+            </label>
+            <label class="full">
+              Descripcion
+              <textarea id="categoryDescription" minlength="10" required></textarea>
+            </label>
+            <button class="button button-primary" type="submit">Crear categoria</button>
+            <p id="categoryFormMessage" class="message"></p>
+          </form>
+        </div>
+
+        <h3>Propuestas pendientes</h3>
         <div id="pendingList" class="pending-list"></div>
       </section>
     </main>

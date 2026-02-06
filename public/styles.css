@@ -26,10 +26,15 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-family: 'Fraunces', serif;
   line-height: 1.2;
   margin: 0;
+}
+
+.hidden {
+  display: none;
 }
 
 .shell {
@@ -113,6 +118,11 @@ h3 {
   background: var(--primary-2);
 }
 
+.button-danger {
+  background: var(--danger);
+  color: #fff;
+}
+
 .button-ghost {
   background: #eaf0f2;
   color: var(--ink);
@@ -180,6 +190,7 @@ textarea {
   border-radius: 10px;
   padding: 0.55rem 0.7rem;
   font: inherit;
+  background: #fff;
 }
 
 textarea {
@@ -242,6 +253,7 @@ textarea {
 
 .tool-card p {
   color: var(--muted);
+  margin: 0.35rem 0;
 }
 
 .tool-card ul {
@@ -277,9 +289,9 @@ textarea {
 }
 
 .message {
-  grid-column: 1 / -1;
   margin: 0;
   font-weight: 600;
+  color: var(--muted);
 }
 
 .editor-controls {
@@ -298,6 +310,18 @@ textarea {
   color: var(--muted);
 }
 
+.admin-section {
+  margin: 1rem 0;
+  padding: 0.9rem;
+  border: 1px dashed #bfd1d8;
+  border-radius: 12px;
+  background: #f6fbfc;
+}
+
+.category-form {
+  margin-top: 0.6rem;
+}
+
 .pending-list {
   margin-top: 0.7rem;
   display: grid;
@@ -311,10 +335,15 @@ textarea {
   padding: 0.65rem;
 }
 
+.pending-card p {
+  margin: 0.3rem 0;
+}
+
 .pending-actions {
   display: flex;
   gap: 0.45rem;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 
 .footer {

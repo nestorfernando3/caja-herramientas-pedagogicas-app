@@ -1,23 +1,32 @@
 const state = {
+  meta: {},
   categories: [],
   tools: [],
   adminKey: localStorage.getItem('editorKey') || ''
 };
 
 const refs = {
+  appTitle: document.querySelector('#appTitle'),
+  appSubtitle: document.querySelector('#appSubtitle'),
   stats: document.querySelector('#stats'),
   categoriesContainer: document.querySelector('#categoriesContainer'),
   categoryFilter: document.querySelector('#categoryFilter'),
-  toolCategory: document.querySelector('#toolCategory'),
+  sortFilter: document.querySelector('#sortFilter'),
   searchInput: document.querySelector('#searchInput'),
+  repositoryMessage: document.querySelector('#repositoryMessage'),
+  toolCategory: document.querySelector('#toolCategory'),
   toolForm: document.querySelector('#toolForm'),
   toolFormMessage: document.querySelector('#toolFormMessage'),
   pendingList: document.querySelector('#pendingList'),
   adminKeyInput: document.querySelector('#adminKeyInput'),
   loginEditorBtn: document.querySelector('#loginEditorBtn'),
   logoutEditorBtn: document.querySelector('#logoutEditorBtn'),
+  exportBtn: document.querySelector('#exportBtn'),
   editorStatus: document.querySelector('#editorStatus'),
-  footerText: document.querySelector('#footerText')
+  footerText: document.querySelector('#footerText'),
+  adminSection: document.querySelector('#adminSection'),
+  categoryForm: document.querySelector('#categoryForm'),
+  categoryFormMessage: document.querySelector('#categoryFormMessage')
 };
 
 refs.adminKeyInput.value = state.adminKey;
@@ -27,6 +36,15 @@ function listFromCsv(value) {
     .split(',')
     .map((item) => item.trim())
     .filter(Boolean);
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
 }
 
 async function api(path, options = {}) {
@@ -48,6 +66,13 @@ async function api(path, options = {}) {
   return body;
 }
 
+function renderMeta() {
+  if (state.meta.name) refs.appTitle.textContent = state.meta.name;
+  if (state.meta.description) refs.appSubtitle.textContent = state.meta.description;
+  const organization = state.meta.organization ? ` | ${state.meta.organization}` : '';
+  refs.footerText.textContent = `© ${new Date().getFullYear()} Repositorio colaborativo docente${organization}`;
+}
+
 function renderStats(data) {
   const byStatus = data.byStatus || {};
   refs.stats.innerHTML = [
@@ -65,7 +90,7 @@ function renderStats(data) {
 
 function renderCategoryOptions() {
   const categoryOptions = state.categories
-    .map((category) => `<option value="${category.id}">${category.name}</option>`)
+    .map((category) => `<option value="${category.id}">${escapeHtml(category.name)}</option>`)
     .join('');
 
   refs.categoryFilter.innerHTML = `<option value="">Todas las categorias</option>${categoryOptions}`;
@@ -73,22 +98,28 @@ function renderCategoryOptions() {
 }
 
 function createToolCard(tool) {
-  const tags = (tool.tags || []).map((tag) => `<span class="pill">${tag}</span>`).join('');
-  const digital = (tool.digitalOptions || []).map((item) => `<li>${item}</li>`).join('');
-  const analog = (tool.analogOptions || []).map((item) => `<li>${item}</li>`).join('');
+  const tags = (tool.tags || [])
+    .map((tag) => `<span class="pill">${escapeHtml(tag)}</span>`)
+    .join('');
+  const digital = (tool.digitalOptions || [])
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join('');
+  const analog = (tool.analogOptions || [])
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join('');
 
   return `
     <article class="tool-card">
-      <h3>${tool.title}</h3>
-      <p>${tool.summary}</p>
+      <h3>${escapeHtml(tool.title)}</h3>
+      <p>${escapeHtml(tool.summary)}</p>
       <div>${tags}</div>
       <h4>Digital</h4>
       <ul>${digital || '<li>No definido</li>'}</ul>
       <h4>Analogico</h4>
       <ul>${analog || '<li>No definido</li>'}</ul>
-      <p><strong>Tip:</strong> ${tool.tip}</p>
-      <p><strong>PEI:</strong> ${tool.peiConnection}</p>
-      <p><strong>Autor:</strong> ${tool.authorName}</p>
+      <p><strong>Tip:</strong> ${escapeHtml(tool.tip)}</p>
+      <p><strong>PEI:</strong> ${escapeHtml(tool.peiConnection)}</p>
+      <p><strong>Autor:</strong> ${escapeHtml(tool.authorName)}</p>
     </article>
   `;
 }
@@ -96,10 +127,11 @@ function createToolCard(tool) {
 function renderRepository() {
   const query = refs.searchInput.value.trim().toLowerCase();
   const filterCategory = refs.categoryFilter.value;
+  const sortBy = refs.sortFilter.value;
 
   const categoriesHtml = state.categories
     .map((category) => {
-      const tools = state.tools.filter((tool) => {
+      let tools = state.tools.filter((tool) => {
         if (tool.categoryId !== category.id) return false;
         if (filterCategory && filterCategory !== category.id) return false;
         if (!query) return true;
@@ -108,16 +140,22 @@ function renderRepository() {
         return haystack.includes(query);
       });
 
+      if (sortBy === 'title') {
+        tools = [...tools].sort((a, b) => a.title.localeCompare(b.title, 'es'));
+      } else {
+        tools = [...tools].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+      }
+
       if (tools.length === 0) return '';
 
       const cards = tools.map(createToolCard).join('');
       return `
         <section class="category">
           <button class="category-head" style="background:${category.color}" data-target="panel-${category.id}">
-            ${category.name} (${tools.length})
+            ${escapeHtml(category.name)} (${tools.length})
           </button>
           <div id="panel-${category.id}" class="category-panel">
-            <p>${category.description}</p>
+            <p>${escapeHtml(category.description)}</p>
             <div class="tools-grid">${cards}</div>
           </div>
         </section>
@@ -126,6 +164,9 @@ function renderRepository() {
     .join('');
 
   refs.categoriesContainer.innerHTML = categoriesHtml || '<p>No hay resultados para el filtro actual.</p>';
+
+  const visibleCount = (refs.categoriesContainer.querySelectorAll('.tool-card') || []).length;
+  refs.repositoryMessage.textContent = `${visibleCount} herramienta(s) mostrada(s)`;
 
   document.querySelectorAll('.category-head').forEach((button) => {
     button.addEventListener('click', () => {
@@ -139,7 +180,9 @@ function renderRepository() {
 }
 
 function renderEditorStatus() {
-  refs.editorStatus.textContent = state.adminKey ? 'Modo editor: activo' : 'Modo editor: inactivo';
+  const active = Boolean(state.adminKey);
+  refs.editorStatus.textContent = active ? 'Modo editor: activo' : 'Modo editor: inactivo';
+  refs.adminSection.classList.toggle('hidden', !active);
 }
 
 function renderPendingList(items) {
@@ -157,10 +200,10 @@ function renderPendingList(items) {
     .map(
       (tool) => `
         <article class="pending-card">
-          <h3>${tool.title}</h3>
-          <p>${tool.summary}</p>
-          <p><strong>Categoria:</strong> ${tool.category?.name || tool.categoryId}</p>
-          <p><strong>Autor:</strong> ${tool.authorName}</p>
+          <h3>${escapeHtml(tool.title)}</h3>
+          <p>${escapeHtml(tool.summary)}</p>
+          <p><strong>Categoria:</strong> ${escapeHtml(tool.category?.name || tool.categoryId)}</p>
+          <p><strong>Autor:</strong> ${escapeHtml(tool.authorName)}</p>
           <div class="pending-actions">
             <button class="button button-primary" data-action="publish" data-id="${tool.id}">Publicar</button>
             <button class="button button-ghost" data-action="archive" data-id="${tool.id}">Archivar</button>
@@ -183,15 +226,20 @@ function renderPendingList(items) {
 }
 
 async function refreshAll() {
-  const [categoriesRes, toolsRes, statsRes] = await Promise.all([
+  refs.repositoryMessage.textContent = 'Cargando...';
+
+  const [metaRes, categoriesRes, toolsRes, statsRes] = await Promise.all([
+    api('/api/meta'),
     api('/api/categories'),
     api('/api/tools'),
     api('/api/stats')
   ]);
 
+  state.meta = metaRes.data || {};
   state.categories = categoriesRes.data;
   state.tools = toolsRes.data;
 
+  renderMeta();
   renderCategoryOptions();
   renderStats(statsRes.data);
   renderRepository();
@@ -206,6 +254,7 @@ async function refreshAll() {
 
 refs.searchInput.addEventListener('input', () => renderRepository());
 refs.categoryFilter.addEventListener('change', () => renderRepository());
+refs.sortFilter.addEventListener('change', () => renderRepository());
 
 refs.toolForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -238,6 +287,36 @@ refs.toolForm.addEventListener('submit', async (event) => {
   }
 });
 
+refs.categoryForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  refs.categoryFormMessage.textContent = 'Creando categoria...';
+
+  const payload = {
+    name: document.querySelector('#categoryName').value,
+    description: document.querySelector('#categoryDescription').value,
+    color: document.querySelector('#categoryColor').value,
+    position: Number(document.querySelector('#categoryPosition').value),
+    isPublished: document.querySelector('#categoryPublished').value === 'true'
+  };
+
+  try {
+    await api('/api/categories', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+
+    refs.categoryForm.reset();
+    document.querySelector('#categoryColor').value = '#2a9d8f';
+    document.querySelector('#categoryPosition').value = 10;
+    document.querySelector('#categoryPublished').value = 'true';
+
+    refs.categoryFormMessage.textContent = 'Categoria creada correctamente.';
+    await refreshAll();
+  } catch (error) {
+    refs.categoryFormMessage.textContent = error.message;
+  }
+});
+
 refs.loginEditorBtn.addEventListener('click', async () => {
   state.adminKey = refs.adminKeyInput.value.trim();
   localStorage.setItem('editorKey', state.adminKey);
@@ -263,6 +342,36 @@ refs.logoutEditorBtn.addEventListener('click', async () => {
   await refreshAll();
 });
 
-renderEditorStatus();
-refs.footerText.textContent = `© ${new Date().getFullYear()} Repositorio colaborativo docente`;
-refreshAll();
+refs.exportBtn.addEventListener('click', async () => {
+  if (!state.adminKey) {
+    refs.pendingList.innerHTML = '<p>Activa modo editor para exportar.</p>';
+    return;
+  }
+
+  try {
+    const payload = await api('/api/export');
+    const blob = new Blob([JSON.stringify(payload.data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    const date = new Date().toISOString().slice(0, 10);
+    anchor.href = url;
+    anchor.download = `caja-herramientas-backup-${date}.json`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    refs.pendingList.innerHTML = `<p>${escapeHtml(error.message)}</p>`;
+  }
+});
+
+async function bootstrap() {
+  renderEditorStatus();
+  refs.footerText.textContent = `© ${new Date().getFullYear()} Repositorio colaborativo docente`;
+
+  try {
+    await refreshAll();
+  } catch (error) {
+    refs.repositoryMessage.textContent = `No se pudo cargar la aplicacion: ${error.message}`;
+  }
+}
+
+bootstrap();

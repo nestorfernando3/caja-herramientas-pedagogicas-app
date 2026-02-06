@@ -1,25 +1,34 @@
 # Caja de Herramientas Pedagogicas - Web App Colaborativa
 
-Aplicacion web para convertir la caja de herramientas en un repositorio vivo, editable y creciente con aportes de multiples docentes.
+Aplicacion web para convertir la caja de herramientas pedagogicas en un repositorio vivo, colaborativo y escalable.
 
-## Lo que resuelve
-- Publica las herramientas por categorias, con buscador y filtros.
-- Permite que cualquier docente envie nuevas propuestas.
-- Incluye flujo editorial (`pending -> published/archived`) para control de calidad.
-- Mantiene datos en `data/db.json` para versionarlos facilmente con Git.
+## Estado del proyecto
+- Web app funcional con frontend y backend integrados.
+- Flujo colaborativo docente (`pending -> published/archived`).
+- Migracion inicial de 5 categorias y 15 herramientas.
+- Documentacion completa en `docs/`.
+
+## Caracteristicas principales
+- Repositorio con buscador, filtros y ordenamiento.
+- Formulario para aportes docentes.
+- Panel editorial con aprobacion y archivo de propuestas.
+- Creacion de categorias desde interfaz (modo editor).
+- Exportacion de backup en JSON.
+- Estadisticas basicas de crecimiento del repositorio.
 
 ## Arquitectura
 - Backend: `Node.js + Express`
-- Frontend: `HTML + CSS + JavaScript` (SPA ligera)
-- Persistencia: archivo JSON (`data/db.json`)
+- Frontend: `HTML + CSS + JavaScript`
+- Persistencia: `data/db.json`
 
 ## Estructura
-- `src/server.js`: API REST + servidor web.
-- `src/db.js`: lectura/escritura de base JSON.
-- `public/index.html`: interfaz.
-- `public/styles.css`: estilos responsive.
-- `public/app.js`: logica cliente.
-- `data/db.json`: categorias y herramientas.
+- `src/server.js`: API REST + seguridad editorial.
+- `src/db.js`: acceso a persistencia local.
+- `public/index.html`: layout de la web app.
+- `public/styles.css`: estilos y responsive.
+- `public/app.js`: logica de cliente.
+- `data/db.json`: datos del repositorio.
+- `docs/`: documentacion operativa y tecnica.
 
 ## Ejecucion local
 1. Instalar dependencias:
@@ -30,43 +39,33 @@ npm install
 ```bash
 cp .env.example .env
 ```
-3. Iniciar:
+3. Iniciar en desarrollo:
 ```bash
 npm run dev
 ```
-4. Abrir en navegador:
+4. Abrir:
 - `http://localhost:3000`
 
 ## Variables de entorno
-- `PORT`: puerto del servidor.
-- `ADMIN_API_KEY`: clave para activar modo editor y aprobar publicaciones.
+- `PORT=3000`
+- `ADMIN_API_KEY=...`
 
-## API principal
-- `GET /api/categories`
-- `POST /api/categories` (admin)
-- `PUT /api/categories/:id` (admin)
-- `GET /api/tools`
-- `POST /api/tools` (publico: crea `pending`; admin: crea `published`)
-- `PUT /api/tools/:id` (admin)
-- `PATCH /api/tools/:id/status` (admin)
-- `GET /api/stats`
-- `GET /api/export` (admin)
+## Scripts
+- `npm run dev`: modo desarrollo con recarga.
+- `npm start`: modo produccion.
+- `npm run lint`: validacion de sintaxis.
 
-## Flujo colaborativo recomendado
-1. Docente envia herramienta desde la web.
-2. El sistema la guarda como `pending`.
-3. Coordinador/editor revisa en "Panel editorial".
-4. Publica (`published`) o archiva (`archived`).
+## Documentacion
+- [Indice](./docs/INDICE.md)
+- [Vision](./docs/VISION.md)
+- [Arquitectura](./docs/ARQUITECTURA.md)
+- [Guia Docentes](./docs/GUIA_DOCENTES.md)
+- [Guia Editores](./docs/GUIA_EDITORES.md)
+- [API](./docs/API.md)
+- [Modelo de Datos](./docs/MODELO_DATOS.md)
+- [Despliegue](./docs/DESPLIEGUE.md)
+- [Mantenimiento](./docs/MANTENIMIENTO.md)
 
-## Despliegue rapido
-Puedes desplegar en Render, Railway o un VPS con Docker/Node:
-- Comando build: no requerido.
-- Comando start: `npm start`
-- Persistencia: montar volumen para conservar `data/db.json`.
-
-## Evoluciones sugeridas
-- Autenticacion por usuarios/roles.
-- Historial de versiones por herramienta.
-- Comentarios/revisiones entre docentes.
-- Importador/exportador CSV.
-- Integracion con base SQL (PostgreSQL) para crecimiento institucional.
+## Seguridad y contribucion
+- [SECURITY.md](./SECURITY.md)
+- [CONTRIBUTING.md](./CONTRIBUTING.md)

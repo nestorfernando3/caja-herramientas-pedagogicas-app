@@ -76,7 +76,7 @@ function sanitizeCategoryInput(input) {
     description: String(input.description || '').trim(),
     color: String(input.color || '#2a9d8f').trim(),
     position: Number.isFinite(Number(input.position)) ? Number(input.position) : 999,
-    isPublished: Boolean(input.isPublished),
+    isPublished: input.isPublished === undefined ? true : Boolean(input.isPublished),
     updatedAt: now
   };
 }
@@ -93,6 +93,32 @@ function validateCategoryInput(payload) {
 
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true, now: new Date().toISOString() });
+});
+
+app.get('/api/meta', async (_req, res) => {
+  const db = await getDb();
+  res.json({ data: db.meta ?? {} });
+});
+
+app.patch('/api/meta', requireAdmin, async (req, res) => {
+  const payload = req.body || {};
+  const now = new Date().toISOString();
+
+  let updated = {};
+  await updateDb((db) => {
+    const currentMeta = db.meta ?? {};
+    updated = {
+      ...currentMeta,
+      name: payload.name ? String(payload.name).trim() : currentMeta.name,
+      organization: payload.organization ? String(payload.organization).trim() : currentMeta.organization,
+      description: payload.description ? String(payload.description).trim() : currentMeta.description,
+      updatedAt: now
+    };
+    db.meta = updated;
+    return db;
+  });
+
+  res.json({ data: updated });
 });
 
 app.get('/api/categories', async (req, res) => {
