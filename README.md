@@ -1,75 +1,48 @@
-# Caja de Herramientas Pedagogicas - Web App Colaborativa
+# Caja de Herramientas Pedagógicas
 
-Aplicacion web para convertir la caja de herramientas pedagogicas en un repositorio vivo, colaborativo y escalable.
+Repositorio colaborativo de estrategias para docentes de Brisas del Río.
 
-## Enlaces
-- Repositorio GitHub: `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
-- Web app en linea (GitHub Pages): `https://nestorfernando3.github.io/caja-herramientas-pedagogicas-app/`
-- API publica (opcional): configura tu URL en `?api=https://tu-backend`
+## Sitio web
+- Web en línea: `https://nestorfernando3.github.io/caja-herramientas-pedagogicas-app/`
+- Repositorio: `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
 
-## Como funciona hoy
-- El frontend esta en GitHub Pages y no requiere login.
-- Cada aporte se registra localmente y abre un borrador en Gmail dirigido a `nestor.BDR@gmail.com` para revisión editorial.
-- Si conectas una API publica, ademas se envia al backend en estado `pending`.
-- Puedes fijar la URL del backend abriendo la web con `?api=https://tu-backend` una sola vez.
-- Si la API no responde, el frontend cambia automaticamente a modo local y guarda aportes en el navegador.
+## Qué puedes hacer en la web
+- Explorar herramientas por categoría.
+- Buscar por título, resumen o etiquetas.
+- Enviar nuevas recomendaciones desde el formulario.
+- Guardar aportes localmente en el navegador.
+- Enviar recomendaciones por correo a `nestor.BDR@gmail.com`.
 
-## Caracteristicas principales
-- Repositorio con buscador, filtros y ordenamiento.
-- Flujo de aportes docentes sin login.
-- Modo API (publico) + fallback local automatico.
-- Panel editorial en backend para aprobar (`published`) o archivar (`archived`).
-- CORS configurable y limite basico de envios por IP.
-- Uso gratuito base con GitHub Pages, sin servicios pagos obligatorios.
+## Flujo de trabajo recomendado
+1. Un docente propone una herramienta desde la web.
+2. La recomendación se envía por correo a `nestor.BDR@gmail.com`.
+3. Se revisa el aporte.
+4. Si aplica, se publica en el repositorio.
 
-## Arquitectura
-- Frontend GitHub Pages: `site/`.
-- Build Pages: `scripts/build-pages.sh`.
-- Backend API: `src/server.js` (Node.js + Express).
-- Persistencia: `data/db.json`.
+## Estructura del proyecto
+- `site/`: versión pública para GitHub Pages.
+- `data/db.json`: base de herramientas y categorías.
+- `public/`: interfaz web completa.
+- `src/`: servidor y API local para desarrollo.
+- `docs/`: guías operativas y técnicas.
 
-## Ejecucion local
-1. Instalar dependencias:
+## Ejecutar en local
 ```bash
 npm install
-```
-2. Configurar variables:
-```bash
-cp .env.example .env
-```
-3. Iniciar backend:
-```bash
 npm run dev
 ```
-4. Abrir:
-- Backend local: `http://localhost:3000`
-- Frontend Pages local (build): `npm run build:pages`
 
-## Variables de entorno
-- `PORT`: puerto HTTP.
-- `ADMIN_API_KEY`: clave editorial.
-- `CORS_ORIGINS`: lista de origenes permitidos (coma).
-- `RATE_LIMIT_WINDOW_MS`: ventana de control para envios publicos.
-- `RATE_LIMIT_MAX_POSTS`: maximo de envios por IP por ventana.
+## Publicación
+- La web se publica automáticamente en GitHub Pages cuando hay cambios en `main`.
+- Workflow: `.github/workflows/pages.yml`.
 
-## Scripts
-- `npm run dev`: modo desarrollo backend.
-- `npm start`: modo produccion backend.
-- `npm run lint`: validacion de sintaxis.
-- `npm run build:pages`: construye sitio estatico para GitHub Pages.
-
-## Despliegue
-- Frontend: GitHub Pages (workflow `Deploy GitHub Pages`).
-- Backend: opcional, trae tu propia URL API (cualquier proveedor gratuito que prefieras).
-
-## Documentacion
-- [Indice](./docs/INDICE.md)
+## Documentación
+- [Índice](./docs/INDICE.md)
+- [Guía para docentes](./docs/GUIA_DOCENTES.md)
+- [Guía para editores](./docs/GUIA_EDITORES.md)
 - [Arquitectura](./docs/ARQUITECTURA.md)
-- [API](./docs/API.md)
 - [Despliegue](./docs/DESPLIEGUE.md)
-- [Guia Docentes](./docs/GUIA_DOCENTES.md)
-- [Guia Editores](./docs/GUIA_EDITORES.md)
 
-## Seguridad y contribucion
-- [SECURITY.md](./SECURITY.md)
+## Contribución y seguridad
 - [CONTRIBUTING.md](./CONTRIBUTING.md)
+- [SECURITY.md](./SECURITY.md)
