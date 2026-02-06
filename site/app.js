@@ -1,6 +1,10 @@
 const LOCAL_KEY = 'caja_tool_contributions_v1';
 
+const config = window.CAJA_CONFIG || {};
+const apiBaseUrl = String(config.apiBaseUrl || '').trim().replace(/\/$/, '');
+
 const state = {
+  mode: 'local',
   meta: {},
   categories: [],
   tools: [],
@@ -18,6 +22,9 @@ const refs = {
   categoriesContainer: document.querySelector('#categoriesContainer'),
   toolCategory: document.querySelector('#toolCategory'),
   contributionForm: document.querySelector('#contributionForm'),
+  contributionModeText: document.querySelector('#contributionModeText'),
+  submitContributionBtn: document.querySelector('#submitContributionBtn'),
+  backendStatus: document.querySelector('#backendStatus'),
   formMessage: document.querySelector('#formMessage'),
   localContributionsList: document.querySelector('#localContributionsList'),
   downloadContributionsBtn: document.querySelector('#downloadContributionsBtn'),
@@ -41,6 +48,27 @@ function parseCsv(value) {
     .filter(Boolean);
 }
 
+function getApiUrl(path) {
+  return `${apiBaseUrl}${path}`;
+}
+
+async function api(path, options = {}) {
+  const response = await fetch(getApiUrl(path), {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {})
+    }
+  });
+
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(body.error || body.errors?.join(', ') || 'Error de API');
+  }
+
+  return body;
+}
+
 function loadLocalContributions() {
   try {
     const raw = localStorage.getItem(LOCAL_KEY);
@@ -52,6 +80,17 @@ function loadLocalContributions() {
 
 function persistLocalContributions() {
   localStorage.setItem(LOCAL_KEY, JSON.stringify(state.localContributions));
+}
+
+function renderMode() {
+  const inApiMode = state.mode === 'api';
+  refs.submitContributionBtn.textContent = inApiMode ? 'Enviar aporte al repositorio' : 'Guardar aporte local';
+  refs.contributionModeText.textContent = inApiMode
+    ? 'Sin login: tus aportes se envian al backend publico y quedan en revision editorial.'
+    : 'Sin login: tus aportes se guardan en este navegador y puedes exportarlos para compartir.';
+  refs.backendStatus.textContent = inApiMode
+    ? `Modo backend publico activo: ${apiBaseUrl}`
+    : 'Modo local activo (sin backend publico configurado o disponible).';
 }
 
 function renderMeta() {
@@ -66,9 +105,9 @@ function renderMeta() {
 function renderStats() {
   refs.stats.innerHTML = [
     ['Categorias', state.categories.length],
-    ['Herramientas base', state.tools.length],
+    ['Herramientas publicadas', state.tools.length],
     ['Aportes locales', state.localContributions.length],
-    ['Total visible', state.tools.length + state.localContributions.length]
+    ['Modo', state.mode === 'api' ? 'API' : 'Local']
   ]
     .map(
       ([label, value]) =>
@@ -183,12 +222,26 @@ function renderLocalContributions() {
     .join('');
 }
 
-function handleContributionSubmit(event) {
+async function sendContributionToApi(contribution) {
+  const payload = await api('/api/contributions', {
+    method: 'POST',
+    body: JSON.stringify(contribution)
+  });
+
+  refs.formMessage.textContent = payload.message || 'Aporte enviado correctamente.';
+}
+
+function saveContributionLocal(contribution) {
+  state.localContributions.unshift(contribution);
+  persistLocalContributions();
+  refs.formMessage.textContent = 'Aporte guardado localmente. Puedes descargarlo para compartirlo.';
+}
+
+async function handleContributionSubmit(event) {
   event.preventDefault();
 
   const now = new Date().toISOString();
   const contribution = {
-    id: `local-${Date.now()}`,
     categoryId: refs.toolCategory.value,
     title: document.querySelector('#toolTitle').value.trim(),
     summary: document.querySelector('#toolSummary').value.trim(),
@@ -198,16 +251,27 @@ function handleContributionSubmit(event) {
     peiConnection: document.querySelector('#toolPei').value.trim(),
     tags: parseCsv(document.querySelector('#toolTags').value),
     authorName: document.querySelector('#toolAuthor').value.trim(),
-    status: 'local',
+    status: state.mode === 'api' ? 'pending' : 'local',
     createdAt: now,
     updatedAt: now
   };
 
-  state.localContributions.unshift(contribution);
-  persistLocalContributions();
+  refs.formMessage.textContent = 'Procesando aporte...';
 
-  refs.contributionForm.reset();
-  refs.formMessage.textContent = 'Aporte guardado localmente. Puedes descargarlo para compartirlo.';
+  try {
+    if (state.mode === 'api') {
+      await sendContributionToApi(contribution);
+    } else {
+      saveContributionLocal({ ...contribution, id: `local-${Date.now()}` });
+    }
+
+    refs.contributionForm.reset();
+  } catch (error) {
+    refs.formMessage.textContent = `No se pudo enviar a API. Guardado localmente. (${error.message})`;
+    saveContributionLocal({ ...contribution, id: `local-${Date.now()}` });
+    state.mode = 'local';
+    renderMode();
+  }
 
   renderStats();
   renderRepository();
@@ -238,17 +302,44 @@ function clearContributions() {
   renderLocalContributions();
 }
 
-async function bootstrap() {
-  refs.repositoryMessage.textContent = 'Cargando contenido...';
-  loadLocalContributions();
+async function loadFromApi() {
+  const [metaRes, categoriesRes, toolsRes] = await Promise.all([
+    api('/api/meta'),
+    api('/api/categories'),
+    api('/api/tools')
+  ]);
 
+  state.meta = metaRes.data || {};
+  state.categories = categoriesRes.data || [];
+  state.tools = toolsRes.data || [];
+  state.mode = 'api';
+}
+
+async function loadFromStaticJson() {
   const response = await fetch('./data/db.json');
   const db = await response.json();
 
   state.meta = db.meta || {};
   state.categories = (db.categories || []).filter((category) => category.isPublished !== false);
   state.tools = (db.tools || []).filter((tool) => tool.status === 'published');
+  state.mode = 'local';
+}
 
+async function bootstrap() {
+  refs.repositoryMessage.textContent = 'Cargando contenido...';
+  loadLocalContributions();
+
+  if (apiBaseUrl) {
+    try {
+      await loadFromApi();
+    } catch {
+      await loadFromStaticJson();
+    }
+  } else {
+    await loadFromStaticJson();
+  }
+
+  renderMode();
   renderMeta();
   renderCategoryOptions();
   renderStats();

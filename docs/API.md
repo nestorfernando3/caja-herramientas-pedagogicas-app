@@ -1,6 +1,7 @@
 # Referencia API
 
 Base local: `http://localhost:3000`
+Base publica objetivo: `https://caja-herramientas-pedagogicas-api.onrender.com`
 
 ## Autenticacion editorial
 Enviar header:
@@ -20,12 +21,14 @@ Enviar header:
 - `POST /api/categories` (admin)
 - `PUT /api/categories/:id` (admin)
 
-### Herramientas
+### Herramientas y aportes
 - `GET /api/tools`
   - Query opcional: `categoryId`, `q`, `status`, `includeHidden=true` (admin)
 - `POST /api/tools`
-  - Usuario normal: crea `pending`
+  - Publico: crea `pending`
   - Admin: crea `published`
+- `POST /api/contributions`
+  - Alias publico de aportes, crea `pending`
 - `PUT /api/tools/:id` (admin)
 - `PATCH /api/tools/:id/status` (admin)
 
@@ -37,3 +40,7 @@ Enviar header:
 - `pending`
 - `published`
 - `archived`
+
+## CORS y limites
+- CORS configurable por `CORS_ORIGINS`.
+- Limite de envio publico por IP con `RATE_LIMIT_WINDOW_MS` y `RATE_LIMIT_MAX_POSTS`.

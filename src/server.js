@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { nanoid } from 'nanoid';
@@ -11,8 +12,24 @@ const publicDir = path.resolve(__dirname, '..', 'public');
 const app = express();
 const PORT = Number(process.env.PORT || 3000);
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY || 'admin-caja-2026';
+const CORS_ORIGINS = String(process.env.CORS_ORIGINS || '*')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+const RATE_LIMIT_WINDOW_MS = Number(process.env.RATE_LIMIT_WINDOW_MS || 60000);
+const RATE_LIMIT_MAX_POSTS = Number(process.env.RATE_LIMIT_MAX_POSTS || 15);
+const postRateLimiter = new Map();
 
 app.use(express.json({ limit: '1mb' }));
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+      if (CORS_ORIGINS.includes('*') || CORS_ORIGINS.includes(origin)) return callback(null, true);
+      return callback(new Error('Origen no permitido por CORS'));
+    }
+  })
+);
 app.use(express.static(publicDir));
 
 function isAdmin(req) {
@@ -24,6 +41,31 @@ function requireAdmin(req, res, next) {
   if (!isAdmin(req)) {
     return res.status(401).json({ error: 'No autorizado. Se requiere clave de editor.' });
   }
+  return next();
+}
+
+function limitPublicPosts(req, res, next) {
+  if (isAdmin(req)) return next();
+  if (req.method !== 'POST') return next();
+
+  const now = Date.now();
+  const ip = String(req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown');
+  const current = postRateLimiter.get(ip);
+
+  if (!current || now > current.resetAt) {
+    postRateLimiter.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return next();
+  }
+
+  if (current.count >= RATE_LIMIT_MAX_POSTS) {
+    const waitSeconds = Math.ceil((current.resetAt - now) / 1000);
+    return res.status(429).json({
+      error: `Demasiados envios. Intenta de nuevo en ${waitSeconds} segundos.`
+    });
+  }
+
+  current.count += 1;
+  postRateLimiter.set(ip, current);
   return next();
 }
 
@@ -203,7 +245,7 @@ app.get('/api/tools', async (req, res) => {
   res.json({ data: tools });
 });
 
-app.post('/api/tools', async (req, res) => {
+async function handleCreateTool(req, res) {
   const db = await getDb();
   const payload = sanitizeToolInput(req.body || {});
   const errors = validateToolInput(payload);
@@ -234,7 +276,10 @@ app.post('/api/tools', async (req, res) => {
       ? 'Herramienta publicada correctamente.'
       : 'Herramienta enviada a revision editorial.'
   });
-});
+}
+
+app.post('/api/tools', limitPublicPosts, handleCreateTool);
+app.post('/api/contributions', limitPublicPosts, handleCreateTool);
 
 app.put('/api/tools/:id', requireAdmin, async (req, res) => {
   const db = await getDb();

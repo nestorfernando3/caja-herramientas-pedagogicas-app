@@ -5,37 +5,26 @@ Aplicacion web para convertir la caja de herramientas pedagogicas en un reposito
 ## Enlaces
 - Repositorio GitHub: `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
 - Web app en linea (GitHub Pages): `https://nestorfernando3.github.io/caja-herramientas-pedagogicas-app/`
-- Web app en GitHub (codigo fuente): `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app/tree/main/site`
-- Deploy en Render (1 click): `https://render.com/deploy?repo=https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
-- Rama activa de trabajo: `codex/caja-webapp-inicial`
-- Despliegue en Render (one-click desde repo): `render.yaml`
+- API publica (Render esperado): `https://caja-herramientas-pedagogicas-api.onrender.com`
+- Deploy backend (1 click): `https://render.com/deploy?repo=https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
 
-## Estado del proyecto
-- Web app funcional con frontend y backend integrados.
-- Flujo colaborativo docente (`pending -> published/archived`).
-- Migracion inicial de 5 categorias y 15 herramientas.
-- Documentacion completa en `docs/`.
+## Como funciona hoy
+- El frontend esta en GitHub Pages y no requiere login.
+- Si la API publica esta disponible, los aportes se envian al backend en estado `pending`.
+- Si la API no responde, el frontend cambia automaticamente a modo local y guarda aportes en el navegador.
 
 ## Caracteristicas principales
-- Modo en linea sin login (GitHub Pages).
 - Repositorio con buscador, filtros y ordenamiento.
-- Formulario para aportes docentes en modo local (sin cuenta).
-- Descarga de aportes en JSON para compartir con el equipo editorial.
-- Estadisticas basicas de crecimiento del repositorio.
+- Flujo de aportes docentes sin login.
+- Modo API (publico) + fallback local automatico.
+- Panel editorial en backend para aprobar (`published`) o archivar (`archived`).
+- CORS configurable y limite basico de envios por IP.
 
 ## Arquitectura
-- Backend: `Node.js + Express`
-- Frontend: `HTML + CSS + JavaScript`
-- Persistencia: `data/db.json`
-
-## Estructura
-- `src/server.js`: API REST + seguridad editorial.
-- `src/db.js`: acceso a persistencia local.
-- `public/index.html`: layout de la web app.
-- `public/styles.css`: estilos y responsive.
-- `public/app.js`: logica de cliente.
-- `data/db.json`: datos del repositorio.
-- `docs/`: documentacion operativa y tecnica.
+- Frontend GitHub Pages: `site/`.
+- Build Pages: `scripts/build-pages.sh`.
+- Backend API: `src/server.js` (Node.js + Express).
+- Persistencia: `data/db.json`.
 
 ## Ejecucion local
 1. Instalar dependencias:
@@ -46,43 +35,38 @@ npm install
 ```bash
 cp .env.example .env
 ```
-3. Iniciar en desarrollo:
+3. Iniciar backend:
 ```bash
 npm run dev
 ```
 4. Abrir:
-- `http://localhost:3000`
+- Backend local: `http://localhost:3000`
+- Frontend Pages local (build): `npm run build:pages`
 
 ## Variables de entorno
-- `PORT=3000`
-- `ADMIN_API_KEY=...`
+- `PORT`: puerto HTTP.
+- `ADMIN_API_KEY`: clave editorial.
+- `CORS_ORIGINS`: lista de origenes permitidos (coma).
+- `RATE_LIMIT_WINDOW_MS`: ventana de control para envios publicos.
+- `RATE_LIMIT_MAX_POSTS`: maximo de envios por IP por ventana.
 
 ## Scripts
-- `npm run dev`: modo desarrollo con recarga.
-- `npm start`: modo produccion.
+- `npm run dev`: modo desarrollo backend.
+- `npm start`: modo produccion backend.
 - `npm run lint`: validacion de sintaxis.
 - `npm run build:pages`: construye sitio estatico para GitHub Pages.
 
-## Produccion rápida
-- Docker local:
-```bash
-docker compose up --build
-```
-- Render:
-1. Conecta el repo en Render.
-2. Selecciona Blueprint y usa `render.yaml`.
-3. Deploy.
+## Despliegue
+- Frontend: GitHub Pages (workflow `Deploy GitHub Pages`).
+- Backend: Render Blueprint (`render.yaml`).
 
 ## Documentacion
 - [Indice](./docs/INDICE.md)
-- [Vision](./docs/VISION.md)
 - [Arquitectura](./docs/ARQUITECTURA.md)
+- [API](./docs/API.md)
+- [Despliegue](./docs/DESPLIEGUE.md)
 - [Guia Docentes](./docs/GUIA_DOCENTES.md)
 - [Guia Editores](./docs/GUIA_EDITORES.md)
-- [API](./docs/API.md)
-- [Modelo de Datos](./docs/MODELO_DATOS.md)
-- [Despliegue](./docs/DESPLIEGUE.md)
-- [Mantenimiento](./docs/MANTENIMIENTO.md)
 
 ## Seguridad y contribucion
 - [SECURITY.md](./SECURITY.md)

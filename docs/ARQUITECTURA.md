@@ -1,23 +1,27 @@
 # Arquitectura Tecnica
 
 ## Stack
-- Backend: Node.js + Express.
-- Frontend: HTML, CSS y JavaScript vanilla.
-- Persistencia: archivo JSON (`data/db.json`).
+- Frontend publico: HTML/CSS/JS en GitHub Pages (`site/`).
+- Backend publico: Node.js + Express (`src/`).
+- Persistencia: JSON versionable (`data/db.json`).
+
+## Modos de operacion del frontend
+- `Modo API`: consulta y envia aportes al backend publico.
+- `Modo Local`: fallback automatico cuando la API no esta disponible.
 
 ## Capas
-- `src/server.js`: API REST, reglas de negocio, seguridad por clave editorial.
-- `src/db.js`: lectura/escritura de datos.
-- `public/index.html`: estructura UI.
-- `public/styles.css`: estilo y responsive.
-- `public/app.js`: consumo API, render y flujos UX.
+- `site/`: app publica sin login.
+- `scripts/build-pages.sh`: construccion de `dist/` para Pages.
+- `src/server.js`: API REST, seguridad editorial, CORS y rate limit.
+- `src/db.js`: acceso a datos.
 
 ## Seguridad aplicada
 - Endpoints editoriales protegidos con `x-api-key`.
-- Validacion de campos obligatorios en backend.
-- Separacion entre datos `published` y `pending` para usuarios no editores.
+- CORS restringible por lista blanca.
+- Limite de envios publicos por IP.
+- Separacion entre `published` y `pending`.
 
 ## Escalabilidad
-- El modelo separa categorias y herramientas para crecimiento incremental.
-- Se puede migrar a SQL sin cambiar contratos principales de API.
-- El export JSON permite backup y continuidad operativa.
+- Separacion frontend/backend para evolucion independiente.
+- API preparada para migrar persistencia a SQL.
+- Export JSON para respaldo operativo.

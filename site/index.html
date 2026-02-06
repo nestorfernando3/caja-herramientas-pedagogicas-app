@@ -42,8 +42,9 @@
       <section id="aportes" class="panel">
         <div class="panel-head">
           <h2>Aportes de docentes</h2>
-          <p>Sin login: tus aportes se guardan en este navegador y puedes exportarlos para compartir.</p>
+          <p id="contributionModeText">Sin login: tus aportes se guardan en este navegador y puedes exportarlos para compartir.</p>
         </div>
+        <p id="backendStatus" class="message"></p>
 
         <form id="contributionForm" class="form-grid">
           <label>Categoria<select id="toolCategory" required></select></label>
@@ -55,7 +56,7 @@
           <label class="full">Conexion PEI<textarea id="toolPei" minlength="8" required></textarea></label>
           <label>Etiquetas (coma)<input id="toolTags" /></label>
           <label>Nombre docente<input id="toolAuthor" required /></label>
-          <button class="button button-primary" type="submit">Guardar aporte local</button>
+          <button id="submitContributionBtn" class="button button-primary" type="submit">Guardar aporte local</button>
           <p id="formMessage" class="message"></p>
         </form>
 
@@ -73,6 +74,7 @@
       <p id="footerText"></p>
     </footer>
 
+    <script src="./config.js"></script>
     <script type="module" src="./app.js"></script>
   </body>
 </html>
