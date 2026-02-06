@@ -7,11 +7,9 @@
 ## Frontend (GitHub Pages)
 El despliegue es automatico con `Deploy GitHub Pages` al hacer push a `main`.
 
-## Backend (Render)
-1. Abrir deploy 1 click:
-- `https://render.com/deploy?repo=https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
-2. Confirmar blueprint `render.yaml`.
-3. Esperar URL publica del servicio API.
+## Backend (opcional)
+Puedes usar cualquier backend publico compatible con esta API (gratuito o propio).
+Si no conectas backend, la app funciona en modo local sin login.
 
 ## Variables backend
 - `PORT`

@@ -5,12 +5,11 @@ Aplicacion web para convertir la caja de herramientas pedagogicas en un reposito
 ## Enlaces
 - Repositorio GitHub: `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
 - Web app en linea (GitHub Pages): `https://nestorfernando3.github.io/caja-herramientas-pedagogicas-app/`
-- API publica (Render esperado): `https://caja-herramientas-pedagogicas-api.onrender.com`
-- Deploy backend (1 click): `https://render.com/deploy?repo=https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
+- API publica (opcional): configura tu URL en `?api=https://tu-backend`
 
 ## Como funciona hoy
 - El frontend esta en GitHub Pages y no requiere login.
-- Si la API publica esta disponible, los aportes se envian al backend en estado `pending`.
+- Si conectas una API publica, los aportes se envian al backend en estado `pending`.
 - Puedes fijar la URL del backend abriendo la web con `?api=https://tu-backend` una sola vez.
 - Si la API no responde, el frontend cambia automaticamente a modo local y guarda aportes en el navegador.
 
@@ -20,6 +19,7 @@ Aplicacion web para convertir la caja de herramientas pedagogicas en un reposito
 - Modo API (publico) + fallback local automatico.
 - Panel editorial en backend para aprobar (`published`) o archivar (`archived`).
 - CORS configurable y limite basico de envios por IP.
+- Uso gratuito base con GitHub Pages, sin servicios pagos obligatorios.
 
 ## Arquitectura
 - Frontend GitHub Pages: `site/`.
@@ -59,7 +59,7 @@ npm run dev
 
 ## Despliegue
 - Frontend: GitHub Pages (workflow `Deploy GitHub Pages`).
-- Backend: Render Blueprint (`render.yaml`).
+- Backend: opcional, trae tu propia URL API (cualquier proveedor gratuito que prefieras).
 
 ## Documentacion
 - [Indice](./docs/INDICE.md)

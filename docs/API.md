@@ -1,7 +1,7 @@
 # Referencia API
 
 Base local: `http://localhost:3000`
-Base publica objetivo: `https://caja-herramientas-pedagogicas-api.onrender.com`
+Base publica: definida por tu proveedor de backend
 
 ## Autenticacion editorial
 Enviar header:
