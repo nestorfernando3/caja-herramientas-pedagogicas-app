@@ -4,6 +4,8 @@ Aplicacion web para convertir la caja de herramientas pedagogicas en un reposito
 
 ## Enlaces
 - Repositorio GitHub: `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
+- Web app en GitHub (código fuente): `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app/tree/main`
+- Deploy en Render (1 click): `https://render.com/deploy?repo=https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
 - Rama activa de trabajo: `codex/caja-webapp-inicial`
 - Despliegue en Render (one-click desde repo): `render.yaml`
 
