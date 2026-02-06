@@ -69,8 +69,10 @@ async function api(path, options = {}) {
     headers.set('x-api-key', state.adminKey);
   }
 
+  // Si no hay baseUrl, usamos '.' para que sea relativo a la subcarpeta (GitHub Pages)
+  const baseUrl = state.apiBaseUrl || '.';
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  const url = path.startsWith('http') ? path : `${state.apiBaseUrl}${cleanPath}`;
+  const url = path.startsWith('http') ? path : `${baseUrl}${cleanPath}`;
 
   const response = await fetch(url, { ...options, headers });
   if (!response.ok) {
@@ -233,7 +235,7 @@ function renderPendingList(items) {
     refs.pendingList.innerHTML = '<p class="message">Modo editorial no disponible en versión estática.</p>';
     return;
   }
-  // ... (rest of renderPendingList is the same as before)
+
   if (items.length === 0) {
     refs.pendingList.innerHTML = '<p class="message">No hay propuestas pendientes.</p>';
     return;
@@ -260,7 +262,7 @@ function renderPendingList(items) {
     button.addEventListener('click', async () => {
       const status = button.dataset.action === 'publish' ? 'published' : 'archived';
       try {
-        await api(`/api/tools/${button.dataset.id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) });
+        await api(`api/tools/${button.dataset.id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) });
         await refreshAll();
       } catch (error) {
         alert('Error: ' + error.message);
@@ -298,10 +300,10 @@ async function refreshAll() {
   refs.repositoryMessage.textContent = 'Conectando con el servidor...';
   try {
     const [metaRes, categoriesRes, toolsRes, statsRes] = await Promise.all([
-      api('/api/meta'),
-      api('/api/categories'),
-      api('/api/tools'),
-      api('/api/stats')
+      api('api/meta'),
+      api('api/categories'),
+      api('api/tools'),
+      api('api/stats')
     ]);
 
     state.meta = metaRes.data || {};
@@ -316,7 +318,7 @@ async function refreshAll() {
     renderEditorStatus();
 
     if (state.adminKey) {
-      const pending = await api('/api/tools?includeHidden=true&status=pending');
+      const pending = await api('api/tools?includeHidden=true&status=pending');
       renderPendingList(pending.data);
     }
   } catch (error) {
@@ -366,7 +368,7 @@ refs.toolForm.addEventListener('submit', async (event) => {
   try {
     btn.disabled = true;
     btn.textContent = 'Enviando...';
-    const res = await api('/api/tools', { method: 'POST', body: JSON.stringify(payload) });
+    const res = await api('api/tools', { method: 'POST', body: JSON.stringify(payload) });
     refs.toolForm.reset();
     refs.toolFormMessage.textContent = res.message;
     await refreshAll();
@@ -381,7 +383,7 @@ refs.toolForm.addEventListener('submit', async (event) => {
 refs.loginEditorBtn.addEventListener('click', async () => {
   state.adminKey = refs.adminKeyInput.value.trim();
   try {
-    await api('/api/export');
+    await api('api/export');
     localStorage.setItem('editorKey', state.adminKey);
     renderEditorStatus();
     await refreshAll();
