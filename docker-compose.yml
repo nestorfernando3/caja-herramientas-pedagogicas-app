@@ -1,0 +1,10 @@
+services:
+  webapp:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - ADMIN_API_KEY=${ADMIN_API_KEY:-admin-caja-2026}
+    volumes:
+      - ./data:/app/data

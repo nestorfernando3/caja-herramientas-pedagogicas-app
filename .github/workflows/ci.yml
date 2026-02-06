@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - 'codex/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint syntax
+        run: npm run lint
+
+      - name: Start app and smoke test
+        run: |
+          ADMIN_API_KEY=test-key npm start &
+          APP_PID=$!
+          sleep 2
+          curl -f http://localhost:3000/api/health
+          curl -f http://localhost:3000/api/stats
+          kill $APP_PID

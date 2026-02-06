@@ -2,6 +2,11 @@
 
 Aplicacion web para convertir la caja de herramientas pedagogicas en un repositorio vivo, colaborativo y escalable.
 
+## Enlaces
+- Repositorio GitHub: `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
+- Rama activa de trabajo: `codex/caja-webapp-inicial`
+- Despliegue en Render (one-click desde repo): `render.yaml`
+
 ## Estado del proyecto
 - Web app funcional con frontend y backend integrados.
 - Flujo colaborativo docente (`pending -> published/archived`).
@@ -54,6 +59,16 @@ npm run dev
 - `npm run dev`: modo desarrollo con recarga.
 - `npm start`: modo produccion.
 - `npm run lint`: validacion de sintaxis.
+
+## Produccion rápida
+- Docker local:
+```bash
+docker compose up --build
+```
+- Render:
+1. Conecta el repo en Render.
+2. Selecciona Blueprint y usa `render.yaml`.
+3. Deploy.
 
 ## Documentacion
 - [Indice](./docs/INDICE.md)
