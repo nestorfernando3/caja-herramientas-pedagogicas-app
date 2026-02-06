@@ -3,7 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Caja de Herramientas Pedagogicas | Web App Colaborativa</title>
+    <meta name="description" content="Plataforma colaborativa para que los docentes compartan, revisen y publiquen estrategias pedagógicas." />
+    <meta name="theme-color" content="#0d9488" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Caja de Herramientas Pedagógicas" />
+    <meta property="og:description" content="Repositorio vivo y colaborativo de estrategias pedagógicas para docentes." />
+    <meta property="og:type" content="website" />
+    
+    <title>Caja de Herramientas Pedagógicas | Web App Colaborativa</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,19 +22,50 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
+    <!-- Background Decorations -->
     <div class="bg-shape bg-shape-one"></div>
     <div class="bg-shape bg-shape-two"></div>
 
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+      <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-17a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm0 18a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zM3 12a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm16 0a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2h-1a1 1 0 0 1-1-1zM5.636 5.636a1 1 0 0 1 1.414 0l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 0 1 0-1.414zm11.314 11.314a1 1 0 0 1 1.414 0l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 0 1 0-1.414zM5.636 18.364a1 1 0 0 1 0-1.414l.707-.707a1 1 0 0 1 1.414 1.414l-.707.707a1 1 0 0 1-1.414 0zm11.314-11.314a1 1 0 0 1 0-1.414l.707-.707a1 1 0 0 1 1.414 1.414l-.707.707a1 1 0 0 1-1.414 0z"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+      </svg>
+    </button>
+
     <header class="hero shell">
-      <p class="badge">Repositorio Vivo Docente</p>
-      <h1 id="appTitle">Caja de Herramientas Pedagogicas</h1>
+      <p class="badge">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        Repositorio Vivo Docente
+      </p>
+      <h1 id="appTitle">Caja de Herramientas Pedagógicas</h1>
       <p id="appSubtitle" class="hero-copy">
-        Plataforma colaborativa para que los docentes compartan, revisen y publiquen estrategias pedagogicas.
+        Plataforma colaborativa para que los docentes compartan, revisen y publiquen estrategias pedagógicas.
       </p>
       <div class="hero-actions">
-        <a href="#repositorio" class="button button-primary">Explorar repositorio</a>
-        <a href="#contribuir" class="button button-ghost">Aportar herramienta</a>
-        <a href="#editorial" class="button button-ghost">Panel editorial</a>
+        <a href="#repositorio" class="button button-primary">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+          </svg>
+          Explorar repositorio
+        </a>
+        <a href="#contribuir" class="button button-ghost">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+          </svg>
+          Aportar herramienta
+        </a>
+        <a href="#editorial" class="button button-ghost">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+          </svg>
+          Panel editorial
+        </a>
       </div>
     </header>
 
@@ -34,15 +74,20 @@
 
       <section id="repositorio" class="panel">
         <div class="panel-head">
-          <h2>Repositorio</h2>
+          <h2>
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+              <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+            </svg>
+            Repositorio
+          </h2>
           <div class="filters">
-            <input id="searchInput" type="search" placeholder="Buscar por titulo, resumen o etiqueta..." />
+            <input id="searchInput" type="search" placeholder="Buscar por título, resumen o etiqueta..." />
             <select id="categoryFilter">
-              <option value="">Todas las categorias</option>
+              <option value="">Todas las categorías</option>
             </select>
             <select id="sortFilter">
-              <option value="recent">Mas reciente</option>
-              <option value="title">Titulo (A-Z)</option>
+              <option value="recent">Más reciente</option>
+              <option value="title">Título (A-Z)</option>
             </select>
           </div>
         </div>
@@ -52,95 +97,130 @@
 
       <section id="contribuir" class="panel">
         <div class="panel-head">
-          <h2>Enviar nueva herramienta</h2>
-          <p>Tu aporte se guarda como propuesta y pasa a revision editorial.</p>
+          <h2>
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            Enviar nueva herramienta
+          </h2>
+          <p>Tu aporte se guarda como propuesta y pasa a revisión editorial.</p>
         </div>
         <form id="toolForm" class="form-grid">
           <label>
-            Categoria
+            Categoría
             <select id="toolCategory" required></select>
           </label>
           <label>
-            Titulo
-            <input id="toolTitle" minlength="4" required />
+            Título
+            <input id="toolTitle" minlength="4" required placeholder="Nombre de la herramienta" />
           </label>
           <label class="full">
             Resumen
-            <textarea id="toolSummary" minlength="12" required></textarea>
+            <textarea id="toolSummary" minlength="12" required placeholder="Describe brevemente la herramienta..."></textarea>
           </label>
           <label class="full">
-            Opciones digitales (separadas por coma)
-            <input id="toolDigital" />
+            Opciones digitales
+            <input id="toolDigital" placeholder="Separadas por coma (ej: Kahoot, Google Forms, Padlet)" />
           </label>
           <label class="full">
-            Opciones analogicas (separadas por coma)
-            <input id="toolAnalog" />
+            Opciones analógicas
+            <input id="toolAnalog" placeholder="Separadas por coma (ej: Cartulinas, Marcadores, Fichas)" />
           </label>
           <label class="full">
-            Tip practico
-            <textarea id="toolTip" minlength="8" required></textarea>
+            Tip práctico
+            <textarea id="toolTip" minlength="8" required placeholder="Comparte un consejo útil para implementar esta herramienta..."></textarea>
           </label>
           <label class="full">
-            Conexion con PEI
-            <textarea id="toolPei" minlength="8" required></textarea>
+            Conexión con PEI
+            <textarea id="toolPei" minlength="8" required placeholder="¿Cómo se conecta con el Proyecto Educativo Institucional?"></textarea>
           </label>
           <label>
-            Etiquetas (coma)
-            <input id="toolTags" />
+            Etiquetas
+            <input id="toolTags" placeholder="Separadas por coma" />
           </label>
           <label>
             Nombre docente
-            <input id="toolAuthor" required />
+            <input id="toolAuthor" required placeholder="Tu nombre completo" />
           </label>
           <label class="full">
             Correo (opcional)
-            <input id="toolEmail" type="email" />
+            <input id="toolEmail" type="email" placeholder="tu@correo.com" />
           </label>
-          <button class="button button-primary" type="submit">Enviar propuesta</button>
+          <button class="button button-primary" type="submit">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+            Enviar propuesta
+          </button>
           <p id="toolFormMessage" class="message"></p>
         </form>
       </section>
 
       <section id="editorial" class="panel">
         <div class="panel-head">
-          <h2>Panel editorial</h2>
-          <p>Aprueba aportes, crea categorias y exporta respaldo.</p>
+          <h2>
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            </svg>
+            Panel editorial
+          </h2>
+          <p>Aprueba aportes, crea categorías y exporta respaldo.</p>
         </div>
         <div class="editor-controls">
           <input id="adminKeyInput" type="password" placeholder="Clave de editor" />
-          <button id="loginEditorBtn" class="button button-ghost" type="button">Activar modo editor</button>
-          <button id="logoutEditorBtn" class="button button-ghost" type="button">Cerrar modo editor</button>
-          <button id="exportBtn" class="button button-ghost" type="button">Exportar JSON</button>
+          <button id="loginEditorBtn" class="button button-ghost" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+            Activar modo editor
+          </button>
+          <button id="logoutEditorBtn" class="button button-ghost hidden" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+            </svg>
+            Cerrar modo editor
+          </button>
+          <button id="exportBtn" class="button button-ghost" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/>
+            </svg>
+            Exportar JSON
+          </button>
           <span id="editorStatus" class="editor-status">Modo editor: inactivo</span>
         </div>
 
         <div id="adminSection" class="admin-section hidden">
-          <h3>Crear categoria</h3>
+          <h3>Crear categoría</h3>
           <form id="categoryForm" class="form-grid category-form">
             <label>
               Nombre
-              <input id="categoryName" minlength="3" required />
+              <input id="categoryName" minlength="3" required placeholder="Ej: Evaluación Formativa" />
             </label>
             <label>
               Color
-              <input id="categoryColor" type="color" value="#2a9d8f" required />
+              <input id="categoryColor" type="color" value="#0d9488" required />
             </label>
             <label>
-              Posicion
+              Posición
               <input id="categoryPosition" type="number" min="1" value="10" required />
             </label>
             <label>
               Publicada
               <select id="categoryPublished">
-                <option value="true">Si</option>
+                <option value="true">Sí</option>
                 <option value="false">No</option>
               </select>
             </label>
             <label class="full">
-              Descripcion
-              <textarea id="categoryDescription" minlength="10" required></textarea>
+              Descripción
+              <textarea id="categoryDescription" minlength="10" required placeholder="Describe esta categoría..."></textarea>
             </label>
-            <button class="button button-primary" type="submit">Crear categoria</button>
+            <button class="button button-primary" type="submit">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+              </svg>
+              Crear categoría
+            </button>
             <p id="categoryFormMessage" class="message"></p>
           </form>
         </div>
