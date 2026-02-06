@@ -1,9 +1,17 @@
+/* ============ Configuration & State ============ */
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has('api')) {
+  localStorage.setItem('apiBaseUrl', urlParams.get('api'));
+}
+
 const state = {
   meta: {},
   categories: [],
   tools: [],
   adminKey: localStorage.getItem('editorKey') || '',
-  theme: localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  theme: localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+  apiBaseUrl: localStorage.getItem('apiBaseUrl') || window.CAJA_CONFIG?.apiBaseUrl || '',
+  isLocalMode: false
 };
 
 const refs = {
@@ -33,9 +41,9 @@ const refs = {
 
 // Initialize Theme
 document.documentElement.setAttribute('data-theme', state.theme);
-
 refs.adminKeyInput.value = state.adminKey;
 
+/* ============ Utilities ============ */
 function listFromCsv(value) {
   return String(value || '')
     .split(',')
@@ -52,6 +60,7 @@ function escapeHtml(value) {
     .replaceAll("'", '&#39;');
 }
 
+/* ============ API Core ============ */
 async function api(path, options = {}) {
   const headers = new Headers(options.headers || {});
   headers.set('Content-Type', 'application/json');
@@ -60,17 +69,20 @@ async function api(path, options = {}) {
     headers.set('x-api-key', state.adminKey);
   }
 
-  const response = await fetch(path, { ...options, headers });
-  const body = await response.json().catch(() => ({}));
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  const url = path.startsWith('http') ? path : `${state.apiBaseUrl}${cleanPath}`;
 
+  const response = await fetch(url, { ...options, headers });
   if (!response.ok) {
+    const body = await response.json().catch(() => ({}));
     const message = body.error || body.errors?.join(', ') || 'Error inesperado';
     throw new Error(message);
   }
 
-  return body;
+  return response.json();
 }
 
+/* ============ Rendering ============ */
 function renderMeta() {
   if (state.meta.name) refs.appTitle.textContent = state.meta.name;
   if (state.meta.description) refs.appSubtitle.textContent = state.meta.description;
@@ -81,8 +93,8 @@ function renderMeta() {
 function renderStats(data) {
   const byStatus = data.byStatus || {};
   const statsConfig = [
-    { label: 'Categorías', value: data.categories, icon: '<path d="M4 6h16V4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16v-2H4V6zm16 2H8c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm0 10H8v-8h12v8z"/>' },
-    { label: 'Herramientas', value: data.tools, icon: '<path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>' },
+    { label: 'Categorías', value: data.categories || 0, icon: '<path d="M4 6h16V4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16v-2H4V6zm16 2H8c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm0 10H8v-8h12v8z"/>' },
+    { label: 'Herramientas', value: data.tools || 0, icon: '<path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>' },
     { label: 'Pendientes', value: byStatus.pending || 0, icon: '<path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>' },
     { label: 'Archivadas', value: byStatus.archived || 0, icon: '<path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.01 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.49-.17-.93-.46-1.27zM6.24 5h11.52l.83 1H5.41l.83-1zM5 19V8h14v11H5zm11-5.5l-4 4-4-4 1.41-1.41L11 13.67V10h2v3.67l1.59-1.59L16 13.5z"/>' }
   ];
@@ -159,7 +171,7 @@ function renderRepository() {
       if (sortBy === 'title') {
         tools = [...tools].sort((a, b) => a.title.localeCompare(b.title, 'es'));
       } else {
-        tools = [...tools].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+        tools = [...tools].sort((a, b) => (b.updatedAt || '').localeCompare(a.updatedAt || ''));
       }
 
       if (tools.length === 0 && query) return '';
@@ -181,9 +193,10 @@ function renderRepository() {
     .join('');
 
   refs.categoriesContainer.innerHTML = categoriesHtml || '<p class="message">No hay resultados para el filtro actual.</p>';
-
   const visibleCount = (refs.categoriesContainer.querySelectorAll('.tool-card') || []).length;
-  refs.repositoryMessage.textContent = `${visibleCount} herramienta(s) mostrada(s)`;
+  refs.repositoryMessage.innerHTML = state.isLocalMode
+    ? `<span class="pill">Modo catálogo activo</span> ${visibleCount} herramientas`
+    : `${visibleCount} herramienta(s) mostrada(s)`;
 
   document.querySelectorAll('.category-head').forEach((button) => {
     button.addEventListener('click', () => {
@@ -193,7 +206,6 @@ function renderRepository() {
     });
   });
 
-  // Open the first panel by default if there are results
   const firstPanel = document.querySelector('.category-panel');
   if (firstPanel && !query) {
     firstPanel.classList.add('open');
@@ -206,14 +218,19 @@ function renderEditorStatus() {
   const active = Boolean(state.adminKey);
   refs.editorStatus.textContent = active ? 'Modo editor: activo' : 'Modo editor: inactivo';
   refs.editorStatus.classList.toggle('active', active);
-  refs.adminSection.classList.toggle('hidden', !active);
+  refs.adminSection.classList.toggle('hidden', !active || state.isLocalMode);
   refs.logoutEditorBtn.classList.toggle('hidden', !active);
   refs.loginEditorBtn.classList.toggle('hidden', active);
+
+  if (state.isLocalMode) {
+    refs.editorStatus.textContent = 'Modo editorial desactivado (Local)';
+    refs.loginEditorBtn.classList.add('hidden');
+  }
 }
 
 function renderPendingList(items) {
-  if (!state.adminKey) {
-    refs.pendingList.innerHTML = '<p class="message">Activa modo editor para revisar propuestas.</p>';
+  if (state.isLocalMode || !state.adminKey) {
+    refs.pendingList.innerHTML = '<p class="message">Modo editorial no disponible en versión estática.</p>';
     return;
   }
 
@@ -231,14 +248,8 @@ function renderPendingList(items) {
           <p><strong>Categoría:</strong> ${escapeHtml(tool.category?.name || tool.categoryId)}</p>
           <p><strong>Autor:</strong> ${escapeHtml(tool.authorName)}</p>
           <div class="pending-actions">
-            <button class="button button-sm button-primary" data-action="publish" data-id="${tool.id}">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              Publicar
-            </button>
-            <button class="button button-sm button-ghost" data-action="archive" data-id="${tool.id}">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-              Archivar
-            </button>
+            <button class="button button-sm button-primary" data-action="publish" data-id="${tool.id}">Publicar</button>
+            <button class="button button-sm button-ghost" data-action="archive" data-id="${tool.id}">Archivar</button>
           </div>
         </article>
       `
@@ -249,10 +260,7 @@ function renderPendingList(items) {
     button.addEventListener('click', async () => {
       const status = button.dataset.action === 'publish' ? 'published' : 'archived';
       try {
-        await api(`/api/tools/${button.dataset.id}/status`, {
-          method: 'PATCH',
-          body: JSON.stringify({ status })
-        });
+        await api(`/api/tools/${button.dataset.id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) });
         await refreshAll();
       } catch (error) {
         alert('Error: ' + error.message);
@@ -261,9 +269,33 @@ function renderPendingList(items) {
   });
 }
 
-async function refreshAll() {
-  refs.repositoryMessage.textContent = 'Cargando herramientas...';
+/* ============ Data Management ============ */
+async function loadLocalFallback() {
+  state.isLocalMode = true;
+  try {
+    const res = await fetch('./data/db.json');
+    if (!res.ok) throw new Error('No local data');
+    const db = await res.json();
+    state.meta = db.meta || {};
+    state.categories = db.categories || [];
+    state.tools = (db.tools || []).filter(t => t.status === 'published');
 
+    renderMeta();
+    renderCategoryOptions();
+    renderStats({
+      categories: db.categories.length,
+      tools: state.tools.length,
+      byStatus: { published: state.tools.length }
+    });
+    renderRepository();
+    renderEditorStatus();
+  } catch (err) {
+    refs.repositoryMessage.innerHTML = '<span class="message error">Error: El servidor no responde y no se encontró respaldo local.</span>';
+  }
+}
+
+async function refreshAll() {
+  refs.repositoryMessage.textContent = 'Conectando con el servidor...';
   try {
     const [metaRes, categoriesRes, toolsRes, statsRes] = await Promise.all([
       api('/api/meta'),
@@ -273,26 +305,27 @@ async function refreshAll() {
     ]);
 
     state.meta = metaRes.data || {};
-    state.categories = categoriesRes.data;
-    state.tools = toolsRes.data;
+    state.categories = categoriesRes.data || [];
+    state.tools = toolsRes.data || [];
+    state.isLocalMode = false;
 
     renderMeta();
     renderCategoryOptions();
     renderStats(statsRes.data);
     renderRepository();
+    renderEditorStatus();
 
     if (state.adminKey) {
       const pending = await api('/api/tools?includeHidden=true&status=pending');
       renderPendingList(pending.data);
-    } else {
-      renderPendingList([]);
     }
   } catch (error) {
-    refs.repositoryMessage.innerHTML = `<span class="message error">Error: ${escapeHtml(error.message)}</span>`;
+    console.warn('API Error, switching to local mode:', error.message);
+    await loadLocalFallback();
   }
 }
 
-// Event Listeners
+/* ============ Event Listeners ============ */
 refs.themeToggle.addEventListener('click', () => {
   state.theme = state.theme === 'light' ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', state.theme);
@@ -306,11 +339,7 @@ refs.sortFilter.addEventListener('change', () => renderRepository());
 refs.toolForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const btn = refs.toolForm.querySelector('button[type="submit"]');
-  const originalText = btn.innerHTML;
-  btn.disabled = true;
-  btn.textContent = 'Enviando...';
-  refs.toolFormMessage.classList.remove('error');
-  refs.toolFormMessage.textContent = 'Procesando tu aporte...';
+  const originalHtml = btn.innerHTML;
 
   const payload = {
     categoryId: refs.toolCategory.value,
@@ -325,63 +354,32 @@ refs.toolForm.addEventListener('submit', async (event) => {
     authorEmail: document.querySelector('#toolEmail').value
   };
 
-  try {
-    const res = await api('/api/tools', {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    });
+  if (state.isLocalMode) {
+    const subject = encodeURIComponent(`Propuesta: ${payload.title}`);
+    const body = encodeURIComponent(`Aporte Docente:\n\n${JSON.stringify(payload, null, 2)}`);
+    window.open(`mailto:nestor.BDR@gmail.com?subject=${subject}&body=${body}`);
+    refs.toolFormMessage.textContent = 'Borrador de correo abierto. ¡Gracias por aportar!';
+    refs.toolForm.reset();
+    return;
+  }
 
+  try {
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    const res = await api('/api/tools', { method: 'POST', body: JSON.stringify(payload) });
     refs.toolForm.reset();
     refs.toolFormMessage.textContent = res.message;
     await refreshAll();
   } catch (error) {
-    refs.toolFormMessage.classList.add('error');
-    refs.toolFormMessage.textContent = error.message;
+    refs.toolFormMessage.innerHTML = `<span class="message error">${error.message}</span>`;
   } finally {
     btn.disabled = false;
-    btn.innerHTML = originalText;
-  }
-});
-
-refs.categoryForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  refs.categoryFormMessage.classList.remove('error');
-  refs.categoryFormMessage.textContent = 'Creando categoría...';
-
-  const payload = {
-    name: document.querySelector('#categoryName').value,
-    description: document.querySelector('#categoryDescription').value,
-    color: document.querySelector('#categoryColor').value,
-    position: Number(document.querySelector('#categoryPosition').value),
-    isPublished: document.querySelector('#categoryPublished').value === 'true'
-  };
-
-  try {
-    await api('/api/categories', {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    });
-
-    refs.categoryForm.reset();
-    document.querySelector('#categoryColor').value = '#0d9488';
-    document.querySelector('#categoryPosition').value = 10;
-    document.querySelector('#categoryPublished').value = 'true';
-
-    refs.categoryFormMessage.textContent = 'Categoría creada correctamente.';
-    await refreshAll();
-  } catch (error) {
-    refs.categoryFormMessage.classList.add('error');
-    refs.categoryFormMessage.textContent = error.message;
+    btn.innerHTML = originalHtml;
   }
 });
 
 refs.loginEditorBtn.addEventListener('click', async () => {
   state.adminKey = refs.adminKeyInput.value.trim();
-  if (!state.adminKey) {
-    alert('Ingresa una clave de editor.');
-    return;
-  }
-
   try {
     await api('/api/export');
     localStorage.setItem('editorKey', state.adminKey);
@@ -389,51 +387,21 @@ refs.loginEditorBtn.addEventListener('click', async () => {
     await refreshAll();
   } catch {
     state.adminKey = '';
-    refs.adminKeyInput.value = '';
     localStorage.removeItem('editorKey');
     renderEditorStatus();
-    refs.pendingList.innerHTML = '<p class="message error">Clave de editor inválida.</p>';
+    alert('Clave de editor inválida.');
   }
 });
 
-refs.logoutEditorBtn.addEventListener('click', async () => {
+refs.logoutEditorBtn.addEventListener('click', () => {
   state.adminKey = '';
-  refs.adminKeyInput.value = '';
   localStorage.removeItem('editorKey');
   renderEditorStatus();
-  await refreshAll();
-});
-
-refs.exportBtn.addEventListener('click', async () => {
-  if (!state.adminKey) {
-    alert('Activa modo editor para exportar.');
-    return;
-  }
-
-  try {
-    const payload = await api('/api/export');
-    const blob = new Blob([JSON.stringify(payload.data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
-    const date = new Date().toISOString().slice(0, 10);
-    anchor.href = url;
-    anchor.download = `caja-herramientas-backup-${date}.json`;
-    anchor.click();
-    URL.revokeObjectURL(url);
-  } catch (error) {
-    alert('Error al exportar: ' + error.message);
-  }
+  refreshAll();
 });
 
 async function bootstrap() {
-  renderEditorStatus();
-  refs.footerText.textContent = `© ${new Date().getFullYear()} Repositorio colaborativo docente`;
-
-  try {
-    await refreshAll();
-  } catch (error) {
-    refs.repositoryMessage.innerHTML = `<span class="message error">No se pudo cargar la aplicación: ${escapeHtml(error.message)}</span>`;
-  }
+  await refreshAll();
 }
 
 bootstrap();
