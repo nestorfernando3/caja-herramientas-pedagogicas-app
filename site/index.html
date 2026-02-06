@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Caja de Herramientas Pedagogicas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="hero shell">
+      <p class="badge">En linea, sin login</p>
+      <h1 id="appTitle">Caja de Herramientas Pedagogicas</h1>
+      <p id="appSubtitle" class="hero-copy">Repositorio pedagogico abierto para consultar y compartir estrategias.</p>
+      <div class="hero-actions">
+        <a href="#repositorio" class="button button-primary">Explorar</a>
+        <a href="#aportes" class="button button-ghost">Aportar</a>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section id="stats" class="stats-grid"></section>
+
+      <section id="repositorio" class="panel">
+        <div class="panel-head">
+          <h2>Repositorio</h2>
+          <div class="filters">
+            <input id="searchInput" type="search" placeholder="Buscar por titulo, resumen o etiqueta..." />
+            <select id="categoryFilter"><option value="">Todas las categorias</option></select>
+            <select id="sortFilter">
+              <option value="recent">Mas reciente</option>
+              <option value="title">Titulo (A-Z)</option>
+            </select>
+          </div>
+        </div>
+        <p id="repositoryMessage" class="message"></p>
+        <div id="categoriesContainer"></div>
+      </section>
+
+      <section id="aportes" class="panel">
+        <div class="panel-head">
+          <h2>Aportes de docentes</h2>
+          <p>Sin login: tus aportes se guardan en este navegador y puedes exportarlos para compartir.</p>
+        </div>
+
+        <form id="contributionForm" class="form-grid">
+          <label>Categoria<select id="toolCategory" required></select></label>
+          <label>Titulo<input id="toolTitle" minlength="4" required /></label>
+          <label class="full">Resumen<textarea id="toolSummary" minlength="12" required></textarea></label>
+          <label class="full">Opciones digitales (coma)<input id="toolDigital" /></label>
+          <label class="full">Opciones analogicas (coma)<input id="toolAnalog" /></label>
+          <label class="full">Tip practico<textarea id="toolTip" minlength="8" required></textarea></label>
+          <label class="full">Conexion PEI<textarea id="toolPei" minlength="8" required></textarea></label>
+          <label>Etiquetas (coma)<input id="toolTags" /></label>
+          <label>Nombre docente<input id="toolAuthor" required /></label>
+          <button class="button button-primary" type="submit">Guardar aporte local</button>
+          <p id="formMessage" class="message"></p>
+        </form>
+
+        <div class="pending-tools">
+          <div class="pending-actions">
+            <button id="downloadContributionsBtn" class="button button-ghost" type="button">Descargar aportes (.json)</button>
+            <button id="clearContributionsBtn" class="button button-danger" type="button">Limpiar aportes locales</button>
+          </div>
+          <div id="localContributionsList"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell footer">
+      <p id="footerText"></p>
+    </footer>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

@@ -4,7 +4,8 @@ Aplicacion web para convertir la caja de herramientas pedagogicas en un reposito
 
 ## Enlaces
 - Repositorio GitHub: `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
-- Web app en GitHub (código fuente): `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app/tree/main`
+- Web app en linea (GitHub Pages): `https://nestorfernando3.github.io/caja-herramientas-pedagogicas-app/`
+- Web app en GitHub (codigo fuente): `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app/tree/main/site`
 - Deploy en Render (1 click): `https://render.com/deploy?repo=https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
 - Rama activa de trabajo: `codex/caja-webapp-inicial`
 - Despliegue en Render (one-click desde repo): `render.yaml`
@@ -16,11 +17,10 @@ Aplicacion web para convertir la caja de herramientas pedagogicas en un reposito
 - Documentacion completa en `docs/`.
 
 ## Caracteristicas principales
+- Modo en linea sin login (GitHub Pages).
 - Repositorio con buscador, filtros y ordenamiento.
-- Formulario para aportes docentes.
-- Panel editorial con aprobacion y archivo de propuestas.
-- Creacion de categorias desde interfaz (modo editor).
-- Exportacion de backup en JSON.
+- Formulario para aportes docentes en modo local (sin cuenta).
+- Descarga de aportes en JSON para compartir con el equipo editorial.
 - Estadisticas basicas de crecimiento del repositorio.
 
 ## Arquitectura
@@ -61,6 +61,7 @@ npm run dev
 - `npm run dev`: modo desarrollo con recarga.
 - `npm start`: modo produccion.
 - `npm run lint`: validacion de sintaxis.
+- `npm run build:pages`: construye sitio estatico para GitHub Pages.
 
 ## Produccion rápida
 - Docker local:
