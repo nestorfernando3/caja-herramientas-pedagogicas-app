@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Caja de Herramientas Pedagogicas | Web App Colaborativa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="bg-shape bg-shape-one"></div>
+    <div class="bg-shape bg-shape-two"></div>
+
+    <header class="hero shell">
+      <p class="badge">Repositorio Vivo Docente</p>
+      <h1>Caja de Herramientas Pedagogicas</h1>
+      <p class="hero-copy">
+        Plataforma colaborativa para que los docentes compartan, revisen y publiquen estrategias pedagogicas.
+      </p>
+      <div class="hero-actions">
+        <a href="#repositorio" class="button button-primary">Explorar repositorio</a>
+        <a href="#contribuir" class="button button-ghost">Aportar herramienta</a>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="stats-grid" id="stats"></section>
+
+      <section id="repositorio" class="panel">
+        <div class="panel-head">
+          <h2>Repositorio</h2>
+          <div class="filters">
+            <input id="searchInput" type="search" placeholder="Buscar por titulo, resumen o etiqueta..." />
+            <select id="categoryFilter">
+              <option value="">Todas las categorias</option>
+            </select>
+          </div>
+        </div>
+        <div id="categoriesContainer"></div>
+      </section>
+
+      <section id="contribuir" class="panel">
+        <div class="panel-head">
+          <h2>Enviar nueva herramienta</h2>
+          <p>Tu aporte se guarda como propuesta y pasa a revision editorial.</p>
+        </div>
+        <form id="toolForm" class="form-grid">
+          <label>
+            Categoria
+            <select id="toolCategory" required></select>
+          </label>
+          <label>
+            Titulo
+            <input id="toolTitle" minlength="4" required />
+          </label>
+          <label class="full">
+            Resumen
+            <textarea id="toolSummary" minlength="12" required></textarea>
+          </label>
+          <label class="full">
+            Opciones digitales (separadas por coma)
+            <input id="toolDigital" />
+          </label>
+          <label class="full">
+            Opciones analogicas (separadas por coma)
+            <input id="toolAnalog" />
+          </label>
+          <label class="full">
+            Tip practico
+            <textarea id="toolTip" minlength="8" required></textarea>
+          </label>
+          <label class="full">
+            Conexion con PEI
+            <textarea id="toolPei" minlength="8" required></textarea>
+          </label>
+          <label>
+            Etiquetas (coma)
+            <input id="toolTags" />
+          </label>
+          <label>
+            Nombre docente
+            <input id="toolAuthor" required />
+          </label>
+          <label class="full">
+            Correo (opcional)
+            <input id="toolEmail" type="email" />
+          </label>
+          <button class="button button-primary" type="submit">Enviar propuesta</button>
+          <p id="toolFormMessage" class="message"></p>
+        </form>
+      </section>
+
+      <section id="editorial" class="panel">
+        <div class="panel-head">
+          <h2>Panel editorial</h2>
+          <p>Aprueba y publica contribuciones pendientes.</p>
+        </div>
+        <div class="editor-controls">
+          <input id="adminKeyInput" type="password" placeholder="Clave de editor" />
+          <button id="loginEditorBtn" class="button button-ghost" type="button">Activar modo editor</button>
+          <button id="logoutEditorBtn" class="button button-ghost" type="button">Cerrar modo editor</button>
+          <span id="editorStatus" class="editor-status">Modo editor: inactivo</span>
+        </div>
+        <div id="pendingList" class="pending-list"></div>
+      </section>
+    </main>
+
+    <footer class="shell footer">
+      <p id="footerText"></p>
+    </footer>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

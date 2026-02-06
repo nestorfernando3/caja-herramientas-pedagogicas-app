@@ -1,0 +1,16 @@
+{
+  "name": "caja-herramientas-pedagogicas-app",
+  "version": "1.0.0",
+  "description": "Web app colaborativa para gestionar una caja de herramientas pedagógicas",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "lint": "node --check src/server.js && node --check public/app.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "nanoid": "^5.1.5"
+  }
+}
