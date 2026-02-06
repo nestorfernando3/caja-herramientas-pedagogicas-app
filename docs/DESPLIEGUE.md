@@ -23,6 +23,7 @@ El despliegue es automatico con `Deploy GitHub Pages` al hacer push a `main`.
 ## URL de API en frontend
 - Archivo: `site/config.js`
 - Campo: `window.CAJA_CONFIG.apiBaseUrl`
+- Alternativa sin editar archivos: abrir la web con `?api=https://tu-backend` (se guarda en navegador)
 - Si la API no responde, el frontend pasa automaticamente a modo local.
 
 ## Local

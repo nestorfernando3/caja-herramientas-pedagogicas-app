@@ -1,7 +1,15 @@
 const LOCAL_KEY = 'caja_tool_contributions_v1';
+const API_URL_KEY = 'caja_api_base_url_v1';
 
 const config = window.CAJA_CONFIG || {};
-const apiBaseUrl = String(config.apiBaseUrl || '').trim().replace(/\/$/, '');
+const queryApiBaseUrl = new URLSearchParams(window.location.search).get('api');
+const storedApiBaseUrl = localStorage.getItem(API_URL_KEY);
+const resolvedApiBaseUrl = queryApiBaseUrl || storedApiBaseUrl || config.apiBaseUrl || '';
+const apiBaseUrl = String(resolvedApiBaseUrl).trim().replace(/\/$/, '');
+
+if (queryApiBaseUrl) {
+  localStorage.setItem(API_URL_KEY, apiBaseUrl);
+}
 
 const state = {
   mode: 'local',

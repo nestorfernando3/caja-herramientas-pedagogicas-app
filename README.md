@@ -11,6 +11,7 @@ Aplicacion web para convertir la caja de herramientas pedagogicas en un reposito
 ## Como funciona hoy
 - El frontend esta en GitHub Pages y no requiere login.
 - Si la API publica esta disponible, los aportes se envian al backend en estado `pending`.
+- Puedes fijar la URL del backend abriendo la web con `?api=https://tu-backend` una sola vez.
 - Si la API no responde, el frontend cambia automaticamente a modo local y guarda aportes en el navegador.
 
 ## Caracteristicas principales

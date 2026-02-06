@@ -16,6 +16,7 @@
 
 ## 3. Como se guarda tu aporte
 - Si el backend publico esta activo: se envia al repositorio y queda en `pending`.
+- Si necesitas conectar una API distinta, abre una vez la web con `?api=https://tu-backend`.
 - Si el backend no esta activo: se guarda localmente en tu navegador.
 
 ## 4. Exportar aportes locales
