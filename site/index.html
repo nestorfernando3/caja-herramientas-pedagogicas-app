@@ -42,9 +42,13 @@
       <section id="aportes" class="panel">
         <div class="panel-head">
           <h2>Aportes de docentes</h2>
-          <p id="contributionModeText">Sin login: tus aportes se guardan en este navegador y se preparan para envío por correo al equipo editorial.</p>
+          <p id="contributionModeText">Sin login: tus aportes se guardan en este navegador.</p>
         </div>
         <p id="backendStatus" class="message"></p>
+        <p class="message">
+          Enviar recomendaciones directamente a:
+          <a id="directEmailLink" href="mailto:nestor.BDR@gmail.com?subject=Recomendaci%C3%B3n%20Caja%20de%20Herramientas">nestor.BDR@gmail.com</a>
+        </p>
 
         <form id="contributionForm" class="form-grid">
           <label>Categoría<select id="toolCategory" required></select></label>
@@ -62,7 +66,6 @@
 
         <div class="pending-tools">
           <div class="pending-actions">
-            <button id="sendAllEmailBtn" class="button button-primary" type="button">Enviar todos por correo</button>
             <button id="downloadContributionsBtn" class="button button-ghost" type="button">Descargar aportes (.json)</button>
             <button id="clearContributionsBtn" class="button button-danger" type="button">Limpiar aportes locales</button>
           </div>

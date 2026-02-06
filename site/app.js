@@ -1,6 +1,7 @@
 const LOCAL_KEY = 'caja_tool_contributions_v1';
 const API_URL_KEY = 'caja_api_base_url_v1';
 const REVIEW_EMAIL = 'nestor.BDR@gmail.com';
+const REVIEW_MAILTO = `mailto:${REVIEW_EMAIL}?subject=${encodeURIComponent('Recomendación Caja de Herramientas')}`;
 
 const config = window.CAJA_CONFIG || {};
 const queryApiBaseUrl = new URLSearchParams(window.location.search).get('api');
@@ -36,7 +37,7 @@ const refs = {
   backendStatus: document.querySelector('#backendStatus'),
   formMessage: document.querySelector('#formMessage'),
   localContributionsList: document.querySelector('#localContributionsList'),
-  sendAllEmailBtn: document.querySelector('#sendAllEmailBtn'),
+  directEmailLink: document.querySelector('#directEmailLink'),
   downloadContributionsBtn: document.querySelector('#downloadContributionsBtn'),
   clearContributionsBtn: document.querySelector('#clearContributionsBtn'),
   footerText: document.querySelector('#footerText')
@@ -96,8 +97,8 @@ function renderMode() {
   const inApiMode = state.mode === 'api';
   refs.submitContributionBtn.textContent = inApiMode ? 'Registrar y enviar aporte' : 'Registrar aporte';
   refs.contributionModeText.textContent = inApiMode
-    ? 'Sin login: los aportes se registran localmente, se envían al backend y se preparan para correo editorial.'
-    : 'Sin login: los aportes se registran localmente y se preparan para envío por correo editorial.';
+    ? 'Sin login: los aportes se registran localmente y también se envían al backend en revisión.'
+    : 'Sin login: los aportes se registran localmente.';
   refs.backendStatus.textContent = inApiMode
     ? `Modo backend público activo: ${apiBaseUrl}`
     : 'Modo local activo (sin backend público configurado o disponible).';
@@ -226,58 +227,10 @@ function renderLocalContributions() {
           state.categories.find((c) => c.id === tool.categoryId)?.name || tool.categoryId
         )}</p>
         <p><strong>Autor:</strong> ${escapeHtml(tool.authorName || 'Comunidad')}</p>
-        <div class="pending-actions">
-          <button class="button button-ghost" data-email-id="${tool.id}" type="button">Enviar por correo</button>
-        </div>
       </article>
     `
     )
     .join('');
-
-  refs.localContributionsList.querySelectorAll('button[data-email-id]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const tool = state.localContributions.find((item) => item.id === button.dataset.emailId);
-      if (tool) openContributionEmailDraft(tool);
-    });
-  });
-}
-
-function buildContributionEmailContent(contribution) {
-  const categoryName =
-    state.categories.find((category) => category.id === contribution.categoryId)?.name ||
-    contribution.categoryId;
-  const subject = `[Aporte Caja Pedagogica] ${contribution.title}`;
-  const body = [
-    'Nuevo aporte docente para revisión editorial',
-    '',
-    `Fecha: ${new Date().toISOString()}`,
-    `Autor: ${contribution.authorName || 'Comunidad'}`,
-    `Categoría: ${categoryName}`,
-    `Título: ${contribution.title}`,
-    '',
-    `Resumen: ${contribution.summary}`,
-    '',
-    `Opciones digitales: ${(contribution.digitalOptions || []).join(', ') || 'No aplica'}`,
-    `Opciones analógicas: ${(contribution.analogOptions || []).join(', ') || 'No aplica'}`,
-    `Tip práctico: ${contribution.tip}`,
-    `Conexión PEI: ${contribution.peiConnection}`,
-    `Etiquetas: ${(contribution.tags || []).join(', ') || 'Sin etiquetas'}`,
-    '',
-    `ID local: ${contribution.id || 'N/A'}`
-  ].join('\n');
-  return { subject, body };
-}
-
-function openContributionEmailDraft(contribution) {
-  const { subject, body } = buildContributionEmailContent(contribution);
-  const gmailComposeUrl =
-    `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(REVIEW_EMAIL)}` +
-    `&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  const popup = window.open(gmailComposeUrl, '_blank', 'noopener,noreferrer');
-  if (!popup) {
-    const mailto = `mailto:${REVIEW_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-  }
 }
 
 async function sendContributionToApi(contribution) {
@@ -321,16 +274,14 @@ async function handleContributionSubmit(event) {
   try {
     if (state.mode === 'api') {
       await sendContributionToApi(contribution);
-      refs.formMessage.textContent = 'Aporte registrado y enviado al repositorio. Ahora se abrira el correo.';
+      refs.formMessage.textContent = `Aporte registrado y enviado al repositorio. También puedes escribir a ${REVIEW_EMAIL}.`;
     } else {
-      refs.formMessage.textContent = 'Aporte registrado localmente. Ahora se abrira el correo.';
+      refs.formMessage.textContent = `Aporte registrado localmente. Envíalo al correo ${REVIEW_EMAIL}.`;
     }
 
     refs.contributionForm.reset();
-    openContributionEmailDraft(contribution);
   } catch (error) {
-    refs.formMessage.textContent = `No se pudo enviar a API. Quedo registrado localmente. (${error.message})`;
-    openContributionEmailDraft(contribution);
+    refs.formMessage.textContent = `No se pudo enviar a API. Quedó registrado localmente. (${error.message})`;
     state.mode = 'local';
     renderMode();
   }
@@ -362,15 +313,6 @@ function clearContributions() {
   renderStats();
   renderRepository();
   renderLocalContributions();
-}
-
-function sendAllLocalByEmail() {
-  if (state.localContributions.length === 0) {
-    refs.formMessage.textContent = 'No hay aportes locales para enviar por correo.';
-    return;
-  }
-  openContributionEmailDraft(state.localContributions[0]);
-  refs.formMessage.textContent = 'Se abrio un correo con el aporte mas reciente. Repite para los demas.';
 }
 
 async function loadFromApi() {
@@ -416,12 +358,13 @@ async function bootstrap() {
   renderStats();
   renderRepository();
   renderLocalContributions();
+  refs.directEmailLink.href = REVIEW_MAILTO;
+  refs.directEmailLink.textContent = REVIEW_EMAIL;
 
   refs.searchInput.addEventListener('input', renderRepository);
   refs.categoryFilter.addEventListener('change', renderRepository);
   refs.sortFilter.addEventListener('change', renderRepository);
   refs.contributionForm.addEventListener('submit', handleContributionSubmit);
-  refs.sendAllEmailBtn.addEventListener('click', sendAllLocalByEmail);
   refs.downloadContributionsBtn.addEventListener('click', downloadContributions);
   refs.clearContributionsBtn.addEventListener('click', clearContributions);
 }
