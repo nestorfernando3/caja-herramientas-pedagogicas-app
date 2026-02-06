@@ -96,25 +96,25 @@ function renderMode() {
   const inApiMode = state.mode === 'api';
   refs.submitContributionBtn.textContent = inApiMode ? 'Registrar y enviar aporte' : 'Registrar aporte';
   refs.contributionModeText.textContent = inApiMode
-    ? 'Sin login: los aportes se registran localmente, se envian al backend y se preparan para correo editorial.'
-    : 'Sin login: los aportes se registran localmente y se preparan para envio por correo editorial.';
+    ? 'Sin login: los aportes se registran localmente, se envían al backend y se preparan para correo editorial.'
+    : 'Sin login: los aportes se registran localmente y se preparan para envío por correo editorial.';
   refs.backendStatus.textContent = inApiMode
-    ? `Modo backend publico activo: ${apiBaseUrl}`
-    : 'Modo local activo (sin backend publico configurado o disponible).';
+    ? `Modo backend público activo: ${apiBaseUrl}`
+    : 'Modo local activo (sin backend público configurado o disponible).';
 }
 
 function renderMeta() {
-  refs.appTitle.textContent = state.meta.name || 'Caja de Herramientas Pedagogicas';
+  refs.appTitle.textContent = state.meta.name || 'Caja de Herramientas Pedagógicas';
   refs.appSubtitle.textContent =
     state.meta.description ||
-    'Repositorio pedagogico abierto para consultar y compartir estrategias.';
+    'Repositorio pedagógico abierto para consultar y compartir estrategias.';
   const organization = state.meta.organization ? ` | ${state.meta.organization}` : '';
-  refs.footerText.textContent = `© ${new Date().getFullYear()} Repositorio pedagogico${organization}`;
+  refs.footerText.textContent = `© ${new Date().getFullYear()} Repositorio pedagógico${organization}`;
 }
 
 function renderStats() {
   refs.stats.innerHTML = [
-    ['Categorias', state.categories.length],
+    ['Categorías', state.categories.length],
     ['Herramientas publicadas', state.tools.length],
     ['Aportes locales', state.localContributions.length],
     ['Modo', state.mode === 'api' ? 'API' : 'Local']
@@ -131,7 +131,7 @@ function renderCategoryOptions() {
     .map((category) => `<option value="${category.id}">${escapeHtml(category.name)}</option>`)
     .join('');
 
-  refs.categoryFilter.innerHTML = `<option value="">Todas las categorias</option>${options}`;
+  refs.categoryFilter.innerHTML = `<option value="">Todas las categorías</option>${options}`;
   refs.toolCategory.innerHTML = options;
 }
 
@@ -147,7 +147,7 @@ function toolCard(tool) {
       <div>${tags}</div>
       <h4>Digital</h4>
       <ul>${digital || '<li>No definido</li>'}</ul>
-      <h4>Analogico</h4>
+      <h4>Analógico</h4>
       <ul>${analog || '<li>No definido</li>'}</ul>
       <p><strong>Tip:</strong> ${escapeHtml(tool.tip)}</p>
       <p><strong>PEI:</strong> ${escapeHtml(tool.peiConnection)}</p>
@@ -222,7 +222,7 @@ function renderLocalContributions() {
       <article class="pending-card">
         <h3>${escapeHtml(tool.title)}</h3>
         <p>${escapeHtml(tool.summary)}</p>
-        <p><strong>Categoria:</strong> ${escapeHtml(
+      <p><strong>Categoría:</strong> ${escapeHtml(
           state.categories.find((c) => c.id === tool.categoryId)?.name || tool.categoryId
         )}</p>
         <p><strong>Autor:</strong> ${escapeHtml(tool.authorName || 'Comunidad')}</p>
@@ -248,19 +248,19 @@ function buildContributionEmailContent(contribution) {
     contribution.categoryId;
   const subject = `[Aporte Caja Pedagogica] ${contribution.title}`;
   const body = [
-    'Nuevo aporte docente para revision editorial',
+    'Nuevo aporte docente para revisión editorial',
     '',
     `Fecha: ${new Date().toISOString()}`,
     `Autor: ${contribution.authorName || 'Comunidad'}`,
-    `Categoria: ${categoryName}`,
-    `Titulo: ${contribution.title}`,
+    `Categoría: ${categoryName}`,
+    `Título: ${contribution.title}`,
     '',
     `Resumen: ${contribution.summary}`,
     '',
     `Opciones digitales: ${(contribution.digitalOptions || []).join(', ') || 'No aplica'}`,
-    `Opciones analogicas: ${(contribution.analogOptions || []).join(', ') || 'No aplica'}`,
-    `Tip practico: ${contribution.tip}`,
-    `Conexion PEI: ${contribution.peiConnection}`,
+    `Opciones analógicas: ${(contribution.analogOptions || []).join(', ') || 'No aplica'}`,
+    `Tip práctico: ${contribution.tip}`,
+    `Conexión PEI: ${contribution.peiConnection}`,
     `Etiquetas: ${(contribution.tags || []).join(', ') || 'Sin etiquetas'}`,
     '',
     `ID local: ${contribution.id || 'N/A'}`
@@ -270,8 +270,14 @@ function buildContributionEmailContent(contribution) {
 
 function openContributionEmailDraft(contribution) {
   const { subject, body } = buildContributionEmailContent(contribution);
-  const mailto = `mailto:${REVIEW_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailto;
+  const gmailComposeUrl =
+    `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(REVIEW_EMAIL)}` +
+    `&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const popup = window.open(gmailComposeUrl, '_blank', 'noopener,noreferrer');
+  if (!popup) {
+    const mailto = `mailto:${REVIEW_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+  }
 }
 
 async function sendContributionToApi(contribution) {
