@@ -24,12 +24,23 @@ Si no conectas backend, la app funciona en modo local sin login.
 - Alternativa sin editar archivos: abrir la web con `?api=https://tu-backend` (se guarda en navegador)
 - Si la API no responde, el frontend pasa automaticamente a modo local.
 
-## Local
+## Local (paso a paso)
+### Ruta simple: probar la misma versión que GitHub Pages
+```bash
+npm install
+npm run build:pages
+npx serve dist
+```
+Luego abre la URL local que imprime `serve`.
+
+### Ruta técnica: correr servidor Node completo
 ```bash
 npm install
 cp .env.example .env
 npm run dev
 ```
+Luego abre:
+- `http://localhost:3000`
 
 ## Produccion backend
 ```bash

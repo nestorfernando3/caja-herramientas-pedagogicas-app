@@ -27,9 +27,46 @@ Repositorio colaborativo de estrategias para docentes de Brisas del Río.
 - `docs/`: guías operativas y técnicas.
 
 ## Ejecutar en local
+### Requisitos
+- Node.js 20 o superior
+- npm 10 o superior
+
+### Opción A: ver la web pública localmente (recomendada)
+1. Instala dependencias:
 ```bash
 npm install
+```
+2. Genera la versión estática:
+```bash
+npm run build:pages
+```
+3. Levanta un servidor local para `dist/`:
+```bash
+npx serve dist
+```
+4. Abre en tu navegador la URL que muestra la terminal (normalmente `http://localhost:3000`).
+
+### Opción B: correr servidor Node local (modo desarrollo técnico)
+1. Instala dependencias:
+```bash
+npm install
+```
+2. (Opcional) crea variables de entorno:
+```bash
+cp .env.example .env
+```
+3. Inicia el servidor:
+```bash
 npm run dev
+```
+4. Abre:
+- `http://localhost:3000`
+
+### Verificación rápida
+- Si todo está bien, debes ver el repositorio cargado y el buscador funcionando.
+- Si no carga, ejecuta:
+```bash
+npm run lint
 ```
 
 ## Publicación
