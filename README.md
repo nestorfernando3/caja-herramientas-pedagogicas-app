@@ -1,85 +1,72 @@
 # Caja de Herramientas Pedagógicas
 
-Repositorio colaborativo de estrategias para docentes de Brisas del Río.
+Plataforma colaborativa de estrategias de aula para docentes de Brisas del Río.
 
-## Sitio web
-- Web en línea: `https://nestorfernando3.github.io/caja-herramientas-pedagogicas-app/`
-- Repositorio: `https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app`
+## Acceso rápido
+- Sitio web: [https://nestorfernando3.github.io/caja-herramientas-pedagogicas-app/](https://nestorfernando3.github.io/caja-herramientas-pedagogicas-app/)
+- Repositorio: [https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app](https://github.com/nestorfernando3/caja-herramientas-pedagogicas-app)
 
-## Qué puedes hacer en la web
-- Explorar herramientas por categoría.
-- Buscar por título, resumen o etiquetas.
-- Enviar nuevas recomendaciones desde el formulario.
-- Guardar aportes localmente en el navegador.
-- Enviar recomendaciones por correo a `nestor.BDR@gmail.com`.
+## Qué resuelve
+- Centraliza herramientas pedagógicas por categoría.
+- Facilita búsqueda por título, resumen y etiquetas.
+- Permite recibir propuestas docentes desde la web.
+- Mantiene un flujo de revisión antes de publicar.
 
-## Flujo de trabajo recomendado
-1. Un docente propone una herramienta desde la web.
-2. La recomendación se envía por correo a `nestor.BDR@gmail.com`.
-3. Se revisa el aporte.
-4. Si aplica, se publica en el repositorio.
+## Flujo de aportes
+1. Docente envía una recomendación desde la web.
+2. El aporte queda guardado localmente en el navegador.
+3. El docente envía la recomendación por correo a `nestor.BDR@gmail.com`.
+4. El equipo editorial revisa y publica si aplica.
 
-## Estructura del proyecto
-- `site/`: versión pública para GitHub Pages.
-- `data/db.json`: base de herramientas y categorías.
-- `public/`: interfaz web completa.
-- `src/`: servidor y API local para desarrollo.
-- `docs/`: guías operativas y técnicas.
-
-## Ejecutar en local
+## Inicio local en 1 minuto
 ### Requisitos
-- Node.js 20 o superior
-- npm 10 o superior
+- Node.js 20+
+- npm 10+
 
-### Opción A: ver la web pública localmente (recomendada)
-1. Instala dependencias:
+### Opción recomendada (igual a GitHub Pages)
 ```bash
 npm install
-```
-2. Genera la versión estática:
-```bash
 npm run build:pages
-```
-3. Levanta un servidor local para `dist/`:
-```bash
 npx serve dist
 ```
-4. Abre en tu navegador la URL que muestra la terminal (normalmente `http://localhost:3000`).
+Abre la URL que imprime la terminal (normalmente `http://localhost:3000`).
 
-### Opción B: correr servidor Node local (modo desarrollo técnico)
-1. Instala dependencias:
+### Opción técnica (servidor Node local)
 ```bash
 npm install
-```
-2. (Opcional) crea variables de entorno:
-```bash
 cp .env.example .env
-```
-3. Inicia el servidor:
-```bash
 npm run dev
 ```
-4. Abre:
-- `http://localhost:3000`
+Abre: `http://localhost:3000`.
 
-### Verificación rápida
-- Si todo está bien, debes ver el repositorio cargado y el buscador funcionando.
-- Si no carga, ejecuta:
+## Comandos útiles
 ```bash
-npm run lint
+npm run dev         # servidor local con recarga
+npm run build:pages # genera sitio estático en dist/
+npm run lint        # validación de sintaxis
+npm start           # arranque en modo producción
 ```
 
-## Publicación
-- La web se publica automáticamente en GitHub Pages cuando hay cambios en `main`.
-- Workflow: `.github/workflows/pages.yml`.
+## Estructura del proyecto
+- `site/`: versión pública usada en GitHub Pages.
+- `data/db.json`: base de categorías y herramientas.
+- `public/`: interfaz web completa.
+- `src/`: servidor y API local para desarrollo.
+- `docs/`: guías funcionales y técnicas.
 
-## Documentación
+## Publicación
+- Deploy automático en GitHub Pages al hacer push a `main`.
+- Workflow: `/Users/nestor/Documents/New project/.github/workflows/pages.yml`
+
+## Documentación clave
 - [Índice](./docs/INDICE.md)
 - [Guía para docentes](./docs/GUIA_DOCENTES.md)
 - [Guía para editores](./docs/GUIA_EDITORES.md)
 - [Arquitectura](./docs/ARQUITECTURA.md)
 - [Despliegue](./docs/DESPLIEGUE.md)
+- [Mantenimiento](./docs/MANTENIMIENTO.md)
 
-## Contribución y seguridad
+## Seguridad y contribución
 - [CONTRIBUTING.md](./CONTRIBUTING.md)
 - [SECURITY.md](./SECURITY.md)
+- [CHANGELOG.md](./CHANGELOG.md)
