@@ -1,0 +1,496 @@
+{
+  "categories": [
+    {
+      "id": "cat-proyecto-vida",
+      "name": "Proyecto de Vida",
+      "description": "Eje articulador para conectar aprendizaje, talentos y metas personales.",
+      "color": "#264653",
+      "position": 1,
+      "isPublished": true,
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "cat-bienestar-integral",
+      "name": "Bienestar Integral",
+      "description": "Estrategias para bienestar físico y socioemocional en el aula.",
+      "color": "#f4a261",
+      "position": 2,
+      "isPublished": true,
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "cat-aprendizaje-creatividad",
+      "name": "Aprendizaje y Creatividad",
+      "description": "Prácticas para un aula activa, creativa y centrada en el estudiante.",
+      "color": "#2a9d8f",
+      "position": 3,
+      "isPublished": true,
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "cat-evaluacion-formativa",
+      "name": "Evaluación Formativa",
+      "description": "Herramientas para evaluar mientras se aprende, con enfoque de mejora.",
+      "color": "#e76f51",
+      "position": 4,
+      "isPublished": true,
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "cat-planificacion-estrategica",
+      "name": "Planificación Estratégica",
+      "description": "Diseño pedagógico intencional para clases inclusivas y efectivas.",
+      "color": "#6c757d",
+      "position": 5,
+      "isPublished": true,
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z"
+    }
+  ],
+  "tools": [
+    {
+      "id": "tool-mapa-suenos-metas",
+      "categoryId": "cat-proyecto-vida",
+      "title": "Mapa de Sueños y Metas",
+      "summary": "Actividad visual para plasmar aspiraciones a corto, mediano y largo plazo.",
+      "digitalOptions": [
+        "Canva",
+        "Padlet",
+        "Miro"
+      ],
+      "analogOptions": [
+        "Cartulinas",
+        "Revistas para recortar",
+        "Colores y dibujos"
+      ],
+      "tip": "Inicia el año escolar con esta actividad y retómala por períodos para evidenciar evolución.",
+      "peiConnection": "Materializa el proyecto de vida de forma tangible y personal.",
+      "tags": [
+        "proyecto de vida",
+        "metas",
+        "orientación"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-portafolio-talentos",
+      "categoryId": "cat-proyecto-vida",
+      "title": "Portafolio de Talentos",
+      "summary": "Espacio físico o digital para evidenciar habilidades, talentos y logros.",
+      "digitalOptions": [
+        "Google Sites",
+        "Blogger",
+        "PowerPoint"
+      ],
+      "analogOptions": [
+        "Álbum de recortes",
+        "Caja decorada",
+        "Diario personal"
+      ],
+      "tip": "Incluye hobbies, certificaciones y testimonios de pares.",
+      "peiConnection": "Valora al estudiante en su integralidad, más allá de las calificaciones.",
+      "tags": [
+        "talentos",
+        "portafolio",
+        "autoconocimiento"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-entrevistas-futuro",
+      "categoryId": "cat-proyecto-vida",
+      "title": "Entrevistas de Futuro",
+      "summary": "Investigación y entrevistas a profesionales para conectar currículo y realidad.",
+      "digitalOptions": [
+        "Google Meet",
+        "Zoom",
+        "Grabación de audio"
+      ],
+      "analogOptions": [
+        "Guión en cuaderno",
+        "Visita presencial",
+        "Carta formal"
+      ],
+      "tip": "Promueve preguntas sobre propósito y pasión, no solo sobre salario.",
+      "peiConnection": "Abre horizontes y muestra aplicabilidad del conocimiento.",
+      "tags": [
+        "orientación vocacional",
+        "entrevista",
+        "mundo real"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-pausas-activas",
+      "categoryId": "cat-bienestar-integral",
+      "title": "Pausas Activas Lúdicas",
+      "summary": "Interludios de 2 a 5 minutos para activar energía y concentración.",
+      "digitalOptions": [
+        "Videos de pausas activas",
+        "GoNoodle",
+        "YouTube"
+      ],
+      "analogOptions": [
+        "Simón dice",
+        "Estiramientos",
+        "Yoga sencillo"
+      ],
+      "tip": "Rota líderes: un estudiante distinto dirige cada pausa.",
+      "peiConnection": "Promueve salud física y mental como base del aprendizaje.",
+      "tags": [
+        "bienestar",
+        "movimiento",
+        "clima escolar"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-circulos-palabra",
+      "categoryId": "cat-bienestar-integral",
+      "title": "Círculos de la Palabra",
+      "summary": "Espacio de diálogo y escucha respetuosa con turnos de participación.",
+      "digitalOptions": [
+        "Foro moderado",
+        "Classroom",
+        "Padlet"
+      ],
+      "analogOptions": [
+        "Objeto de la palabra",
+        "Reloj de arena",
+        "Ronda presencial"
+      ],
+      "tip": "Solo habla quien sostiene el objeto de la palabra.",
+      "peiConnection": "Fortalece comunicación asertiva y clima seguro.",
+      "tags": [
+        "convivencia",
+        "escucha",
+        "socioemocional"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-diarios-bienestar",
+      "categoryId": "cat-bienestar-integral",
+      "title": "Diarios de Bienestar",
+      "summary": "Bitácora de reflexión personal sobre bienestar físico, social y emocional.",
+      "digitalOptions": [
+        "Google Keep",
+        "Documento privado",
+        "Word"
+      ],
+      "analogOptions": [
+        "Cuaderno personal",
+        "Agenda",
+        "Libreta"
+      ],
+      "tip": "Usa preguntas guía semanales para profundizar la reflexión.",
+      "peiConnection": "Promueve autogestión del bienestar.",
+      "tags": [
+        "bienestar",
+        "autorregulación",
+        "reflexión"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-rutinas-pensamiento",
+      "categoryId": "cat-aprendizaje-creatividad",
+      "title": "Rutinas de Pensamiento",
+      "summary": "Estructuras de preguntas para analizar, reflexionar y profundizar.",
+      "digitalOptions": [
+        "FigJam",
+        "Jamboard",
+        "Plantillas colaborativas"
+      ],
+      "analogOptions": [
+        "Pizarra",
+        "Post-its",
+        "Organizadores gráficos"
+      ],
+      "tip": "Prueba la rutina: Antes pensaba... ahora pienso.",
+      "peiConnection": "Desarrolla pensamiento crítico y aprender a aprender.",
+      "tags": [
+        "pensamiento crítico",
+        "rutinas",
+        "reflexión"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-gamificacion-sencilla",
+      "categoryId": "cat-aprendizaje-creatividad",
+      "title": "Gamificación Sencilla",
+      "summary": "Uso de puntos, insignias y retos para aumentar motivación y compromiso.",
+      "digitalOptions": [
+        "Kahoot",
+        "Quizizz",
+        "ClassDojo"
+      ],
+      "analogOptions": [
+        "Puntos en pizarra",
+        "Insignias de cartulina",
+        "Misiones semanales"
+      ],
+      "tip": "Empieza simple y sostenido: prioriza sensación de progreso.",
+      "peiConnection": "Hace el aprendizaje más lúdico y atractivo.",
+      "tags": [
+        "gamificación",
+        "motivación",
+        "participación"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-productos-digitales",
+      "categoryId": "cat-aprendizaje-creatividad",
+      "title": "Creación de Productos Digitales",
+      "summary": "Transformar aprendizaje en videos, podcasts, infografías o blogs.",
+      "digitalOptions": [
+        "Canva",
+        "Audacity",
+        "CapCut"
+      ],
+      "analogOptions": [
+        "Periódico mural",
+        "Obra de teatro",
+        "Maqueta"
+      ],
+      "tip": "Enfoca la evaluación en claridad del mensaje, no en perfección técnica.",
+      "peiConnection": "Empodera al estudiante como creador de conocimiento.",
+      "tags": [
+        "creatividad",
+        "producto final",
+        "comunicación"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-escalera-metacognicion",
+      "categoryId": "cat-evaluacion-formativa",
+      "title": "Escalera de la Metacognición",
+      "summary": "Preguntas para reflexionar sobre qué se aprende, cómo y para qué.",
+      "digitalOptions": [
+        "Google Forms",
+        "Kahoot",
+        "Quizizz"
+      ],
+      "analogOptions": [
+        "Ticket de salida",
+        "Reflexión oral",
+        "Semáforo del aprendizaje"
+      ],
+      "tip": "Aplícala al cierre de clase con un formato breve.",
+      "peiConnection": "Promueve apropiación del aprendizaje por parte del estudiante.",
+      "tags": [
+        "evaluación formativa",
+        "metacognición",
+        "reflexión"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-tutoria-pares",
+      "categoryId": "cat-evaluacion-formativa",
+      "title": "Tutoría Entre Pares",
+      "summary": "Estudiantes con mayor dominio apoyan a compañeros en ambiente de confianza.",
+      "digitalOptions": [
+        "Salas de grupos en video",
+        "Documento compartido",
+        "Chat guiado"
+      ],
+      "analogOptions": [
+        "Hombro con hombro",
+        "Estaciones de expertos",
+        "Pizarras pequeñas"
+      ],
+      "tip": "Entrega pautas para guiar sin dar respuestas directas.",
+      "peiConnection": "Fortalece comunidad y responsabilidad social en el aula.",
+      "tags": [
+        "aprendizaje colaborativo",
+        "evaluación",
+        "pares"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-rubricas-cocreadas",
+      "categoryId": "cat-evaluacion-formativa",
+      "title": "Rúbricas Co-creadas",
+      "summary": "Cocreación de criterios con estudiantes para claridad y compromiso.",
+      "digitalOptions": [
+        "Google Docs",
+        "RubiStar",
+        "Plantillas colaborativas"
+      ],
+      "analogOptions": [
+        "Lluvia de ideas",
+        "Tarjetas de criterios",
+        "Pizarra"
+      ],
+      "tip": "Pregunta: cómo se vería un trabajo excelente en esta tarea.",
+      "peiConnection": "Hace la evaluación más transparente, autónoma y justa.",
+      "tags": [
+        "rúbricas",
+        "evaluación",
+        "autonomía"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-plan-clase-5e",
+      "categoryId": "cat-planificacion-estrategica",
+      "title": "Plan de Clase 5E",
+      "summary": "Modelo para estructurar clases: enganchar, explorar, explicar, elaborar y evaluar.",
+      "digitalOptions": [
+        "Canva",
+        "MindMeister",
+        "Plantillas digitales"
+      ],
+      "analogOptions": [
+        "Libreta",
+        "Fichas de planificación",
+        "Post-its"
+      ],
+      "tip": "Ajusta tiempos de cada fase según tema y respuesta del grupo.",
+      "peiConnection": "Refuerza al docente como diseñador de experiencias.",
+      "tags": [
+        "planeación",
+        "5e",
+        "didáctica"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-dua",
+      "categoryId": "cat-planificacion-estrategica",
+      "title": "Diseño Universal para el Aprendizaje (DUA)",
+      "summary": "Planificación con múltiples formas de presentar, expresar y motivar.",
+      "digitalOptions": [
+        "Lectores de texto",
+        "Subtítulos",
+        "Mapas mentales"
+      ],
+      "analogOptions": [
+        "Material manipulativo",
+        "Opciones de evaluación",
+        "Espacios flexibles"
+      ],
+      "tip": "Planea siempre una alternativa para diversidad de estilos de aprendizaje.",
+      "peiConnection": "Garantiza oportunidades de aprendizaje para todos.",
+      "tags": [
+        "dua",
+        "inclusión",
+        "planeación"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    },
+    {
+      "id": "tool-checklist-docente",
+      "categoryId": "cat-planificacion-estrategica",
+      "title": "Checklist de Autoevaluación Docente",
+      "summary": "Lista de verificación para reflexionar y mejorar la práctica pedagógica.",
+      "digitalOptions": [
+        "Google Keep",
+        "Google Forms",
+        "Trello"
+      ],
+      "analogOptions": [
+        "Libreta personal",
+        "Diario docente",
+        "Plantilla impresa"
+      ],
+      "tip": "Enfócate en 2 o 3 indicadores por semana para una mejora sostenible.",
+      "peiConnection": "Fortalece el desarrollo profesional reflexivo docente.",
+      "tags": [
+        "autoevaluación",
+        "mejora continua",
+        "docente"
+      ],
+      "status": "published",
+      "authorName": "Equipo Brisas del Río ❤️",
+      "authorEmail": "",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-02-06T00:00:00.000Z",
+      "publishedAt": "2026-02-06T00:00:00.000Z"
+    }
+  ],
+  "meta": {
+    "name": "Caja de Herramientas Pedagógicas",
+    "organization": "IED Brisas del Río",
+    "version": 1
+  }
+}

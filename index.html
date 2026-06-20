@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caja de Herramientas Pedagógicas | IED Brisas del Río</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Plataforma interactiva de Caja de Herramientas Pedagógicas para los docentes de la IED Brisas del Río, Barranquilla. Comparte, explora y gestiona estrategias pedagógicas." />
+  <meta name="author" content="Docentes IED Brisas del Río" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Caja de Herramientas Pedagógicas" />
+  <meta property="og:description" content="Repositorio pedagógico interactivo de estrategias didácticas conectadas con el PEI de la IED Brisas del Río." />
+  <meta property="og:image" content="/icons/icon-512.png" />
+
+  <!-- PWA Manifest & Mobile Icons -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <meta name="theme-color" content="#0d9488" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/src/styles/index.css" />
+</head>
+<body>
+  <!-- Keyboard accessibility skip-link -->
+  <a href="#repositorio" class="skip-to-content">Saltar al contenido principal</a>
+
+  <!-- Animated Background Orbs -->
+  <div class="bg-shape bg-shape-one" aria-hidden="true"></div>
+  <div class="bg-shape bg-shape-two" aria-hidden="true"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" aria-label="Navegación principal">
+    <div class="shell navbar-container">
+      <a href="#" class="navbar-brand" aria-label="Ir al inicio">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+        <span>Herramientas BDR</span>
+      </a>
+
+      <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navbarMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="navbar-menu" id="navbarMenu">
+        <a href="#hero" class="navbar-link active">Inicio</a>
+        <a href="#estadisticas" class="navbar-link">Estadísticas</a>
+        <a href="#repositorio" class="navbar-link">Repositorio</a>
+        <a href="#contribuir" class="navbar-link">Aportar</a>
+        <a href="#editorial" class="navbar-link">Panel Editorial</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema de color">
+          <!-- Sun Icon for Dark Mode toggle -->
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-17a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm0 18a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zM3 12a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm16 0a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2h-1a1 1 0 0 1-1-1zM5.636 5.636a1 1 0 0 1 1.414 0l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 0 1 0-1.414zm11.314 11.314a1 1 0 0 1 1.414 0l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 0 1 0-1.414zM5.636 18.364a1 1 0 0 1 0-1.414l.707-.707a1 1 0 0 1 1.414 1.414l-.707.707a1 1 0 0 1-1.414 0zm11.314-11.314a1 1 0 0 1 0-1.414l.707-.707a1 1 0 0 1 1.414 1.414l-.707.707a1 1 0 0 1-1.414 0z" />
+          </svg>
+          <!-- Moon Icon for Light Mode toggle -->
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header id="hero" class="hero shell scroll-reveal">
+    <div class="badge">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+      </svg>
+      <span>Repositorio Vivo Docente</span>
+    </div>
+    <h1 id="appTitle">Caja de Herramientas Pedagógicas</h1>
+    <p id="appSubtitle" class="hero-copy">
+      Una plataforma interactiva y colaborativa creada para y por los docentes de la IED Brisas del Río, facilitando la planeación didáctica, la innovación en el aula y la alineación con nuestro PEI.
+    </p>
+    <div class="hero-actions">
+      <a href="#repositorio" class="button button-primary">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" />
+        </svg>
+        Explorar Repositorio
+      </a>
+      <a href="#contribuir" class="button button-ghost">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
+        </svg>
+        Aportar Estrategia
+      </a>
+    </div>
+
+    <!-- Hero metrics quick row -->
+    <div class="hero-metrics" aria-label="Estadísticas del repositorio">
+      <div class="hero-metric-item">
+        <span class="hero-metric-value" id="heroMetricCategories">0</span>
+        <span class="hero-metric-label">Categorías</span>
+      </div>
+      <div class="hero-metric-item">
+        <span class="hero-metric-value" id="heroMetricTools">0</span>
+        <span class="hero-metric-label">Estrategias</span>
+      </div>
+      <div class="hero-metric-item">
+        <span class="hero-metric-value">∞</span>
+        <span class="hero-metric-label">Gratis</span>
+      </div>
+    </div>
+
+    <div class="scroll-indicator" aria-hidden="true">
+      <span>Desliza para ver más</span>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+
+    <!-- Caribe transition wave -->
+    <div class="hero-wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+        <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- Main Shell -->
+  <main class="shell">
+    <!-- Statistics Grid -->
+    <section id="estadisticas" class="stats-grid scroll-reveal" aria-label="Estadísticas de la plataforma">
+      <!-- Generated Dynamically by JS -->
+    </section>
+
+    <!-- Repository Section -->
+    <section id="repositorio" class="panel scroll-reveal">
+      <div class="panel-head">
+        <h2>
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true">
+            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5.47 12.5L12 16l6.53-3.5L12 9 5.47 12.5z" />
+          </svg>
+          Repositorio de Estrategias
+        </h2>
+        <p>Busca, filtra por categorías y guarda tus favoritas en tu navegador.</p>
+      </div>
+
+      <!-- Filters Toolbar -->
+      <div class="filters-toolbar" aria-label="Herramientas de búsqueda y filtrado">
+        <div class="search-input-wrapper">
+          <input id="searchInput" type="search" placeholder="Buscar título, resumen, tip o etiqueta..." aria-label="Buscar herramientas" />
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" class="search-icon" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <select id="categoryFilter" aria-label="Filtrar por categoría">
+          <option value="">Todas las categorías</option>
+        </select>
+        <select id="sortFilter" aria-label="Ordenar resultados">
+          <option value="recent">Más recientes primero</option>
+          <option value="title">Título (A-Z)</option>
+        </select>
+        <button id="favoritesFilterBtn" class="button button-ghost favorites-filter-btn" aria-pressed="false">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="btn-text-desktop">Mis Favoritas </span>
+          <span class="favorites-count-badge">(<span id="favoritesCount">0</span>)</span>
+        </button>
+      </div>
+
+      <p id="repositoryMessage" class="message"></p>
+      
+      <!-- Accordions Container -->
+      <div id="categoriesContainer" role="region" aria-live="polite">
+        <!-- Generated Dynamically by JS -->
+      </div>
+    </section>
+
+    <!-- Contribute Section -->
+    <section id="contribuir" class="panel scroll-reveal">
+      <div class="panel-head">
+        <h2>
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
+          </svg>
+          Enviar Nueva Herramienta
+        </h2>
+        <p>Comparte tus estrategias con el equipo. Tu propuesta pasará a revisión editorial antes de ser pública en el catálogo.</p>
+      </div>
+      <form id="toolForm" class="form-grid" novalidate>
+        <label>
+          Categoría *
+          <select id="toolCategory" required aria-required="true">
+            <!-- Loaded Dynamically -->
+          </select>
+        </label>
+        <label>
+          Título de la herramienta *
+          <input id="toolTitle" minlength="4" required aria-required="true" placeholder="Ej: Ruleta de Saberes" />
+        </label>
+        <label class="full">
+          Resumen descriptivo *
+          <textarea id="toolSummary" minlength="12" required aria-required="true" placeholder="Describe brevemente de qué se trata y su dinámica general..."></textarea>
+        </label>
+        <label class="full">
+          Recursos digitales recomendados
+          <input id="toolDigital" placeholder="Ej: Canva, Mentimeter, Padlet (separados por comas)" />
+        </label>
+        <label class="full">
+          Recursos analógicos o físicos recomendados
+          <input id="toolAnalog" placeholder="Ej: Fichas de cartón, Marcadores de colores, Pizarra (separados por comas)" />
+        </label>
+        <label class="full">
+          Tip práctico de implementación *
+          <textarea id="toolTip" minlength="8" required aria-required="true" placeholder="Consejo o truco práctico para aplicar con éxito en clase..."></textarea>
+        </label>
+        <label class="full">
+          Conexión institucional con el PEI *
+          <textarea id="toolPei" minlength="8" required aria-required="true" placeholder="¿Cómo contribuye esta herramienta a las metas del PEI o al modelo pedagógico de Brisas del Río?"></textarea>
+        </label>
+        <label>
+          Etiquetas clave
+          <input id="toolTags" placeholder="Ej: gamificación, evaluación, socioemocional (separados por comas)" />
+        </label>
+        <label>
+          Nombre del autor/docente *
+          <input id="toolAuthor" required aria-required="true" placeholder="Tu nombre y apellido" />
+        </label>
+        <label class="full">
+          Correo electrónico (opcional)
+          <input id="toolEmail" type="email" placeholder="ejemplo@correo.com" />
+        </label>
+        <div class="full contribute-submit-wrapper">
+          <button class="button button-primary contribute-submit-btn" type="submit">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+            </svg>
+            Enviar Propuesta
+          </button>
+        </div>
+        <div class="full">
+          <p id="toolFormMessage" class="message hidden"></p>
+        </div>
+      </form>
+    </section>
+
+    <!-- Editorial Section -->
+    <section id="editorial" class="panel scroll-reveal">
+      <div class="panel-head">
+        <h2>
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true">
+            <path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+          </svg>
+          Gestión Editorial
+        </h2>
+        <p>Accede con tu clave de editor para revisar propuestas enviadas, crear nuevas categorías o respaldar la base de datos.</p>
+      </div>
+
+      <!-- Editor Panel Login / Key controls -->
+      <div class="editor-controls">
+        <input id="adminKeyInput" type="password" placeholder="Ingresa la clave de editor..." aria-label="Clave de acceso de editor" />
+        <button id="loginEditorBtn" class="button button-ghost" type="button">
+          Activar Modo Editor
+        </button>
+        <button id="logoutEditorBtn" class="button button-danger hidden" type="button">
+          Salir del Modo Editor
+        </button>
+        <button id="exportBtn" class="button button-ghost" type="button">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+            <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+          </svg>
+          Exportar Base de Datos (JSON)
+        </button>
+        <span id="editorStatus" class="editor-status">Modo editor: inactivo</span>
+      </div>
+
+      <!-- Authenticated Editor Panels -->
+      <div id="adminSection" class="admin-section hidden">
+        <h3>Crear Nueva Categoría</h3>
+        <form id="categoryForm" class="form-grid category-form" novalidate>
+          <label>
+            Nombre de la categoría *
+            <input id="categoryName" minlength="3" required placeholder="Ej: Inclusión Educativa" />
+          </label>
+          <label>
+            Color identificador (Hex/Color Picker) *
+            <input id="categoryColor" type="color" value="#0d9488" required />
+          </label>
+          <label>
+            Posición de ordenamiento *
+            <input id="categoryPosition" type="number" min="1" value="6" required />
+          </label>
+          <label>
+            ¿Habilitada en catálogo?
+            <select id="categoryPublished">
+              <option value="true">Sí, visible de inmediato</option>
+              <option value="false">No, mantener oculta</option>
+            </select>
+          </label>
+          <label class="full">
+            Descripción de la categoría *
+            <textarea id="categoryDescription" minlength="10" required placeholder="Describe qué tipo de estrategias pedagógicas se incluyen aquí..."></textarea>
+          </label>
+          <div class="full">
+            <button class="button button-primary" type="submit">
+              Crear Categoría
+            </button>
+          </div>
+          <div class="full">
+            <p id="categoryFormMessage" class="message hidden"></p>
+          </div>
+        </form>
+      </div>
+
+      <div id="pendingArea" class="pending-area">
+        <h3>Propuestas Pedagógicas Pendientes de Revisión</h3>
+        <div id="pendingList" class="pending-list" aria-live="polite">
+          <!-- Loaded Dynamically when authenticated -->
+          <p class="message">Inicia sesión como editor para ver las propuestas pendientes.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="shell footer">
+    <p id="footerText">© 2026 Caja de Herramientas Pedagógicas | IED Brisas del Río, Barranquilla</p>
+  </footer>
+
+  <!-- Detail Dialog Modal -->
+  <dialog id="toolModal" aria-labelledby="modalTitle" aria-modal="true" role="dialog">
+    <div class="modal-header-accent" id="modalHeaderAccent"></div>
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">Detalle de Herramienta</h3>
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Cerrar ventana de detalles">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Loaded Dynamically -->
+    </div>
+    <div class="modal-footer">
+      <span class="modal-author-badge" id="modalAuthorBadge">Enviado por: <strong>---</strong></span>
+      <div class="modal-actions">
+        <button id="modalFavBtn" class="button button-ghost modal-action-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span>Favorito</span>
+        </button>
+        <button id="modalShareBtn" class="button button-primary modal-action-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.8 2.04.8 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+          </svg>
+          <span>Compartir</span>
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Entry Script (Vite module loading) -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+/* CSS Custom Properties & Color System */
+
+:root {
+  /* Color Palette (Light Mode Default) */
+  --color-primary-hue: 174;
+  --color-primary-sat: 82%;
+  --color-primary-light: 33%;
+  --color-primary: hsl(var(--color-primary-hue), var(--color-primary-sat), var(--color-primary-light));
+  --color-primary-hover: hsl(var(--color-primary-hue), var(--color-primary-sat), calc(var(--color-primary-light) - 5%));
+  --color-primary-alpha: hsla(var(--color-primary-hue), var(--color-primary-sat), var(--color-primary-light), 0.1);
+  --color-primary-alpha-strong: hsla(var(--color-primary-hue), var(--color-primary-sat), var(--color-primary-light), 0.2);
+
+  --color-secondary-hue: 200;
+  --color-secondary-sat: 35%;
+  --color-secondary-light: 24%;
+  --color-secondary: hsl(var(--color-secondary-hue), var(--color-secondary-sat), var(--color-secondary-light));
+  --color-secondary-hover: hsl(var(--color-secondary-hue), var(--color-secondary-sat), calc(var(--color-secondary-light) - 5%));
+
+  --color-accent-hue: 39;
+  --color-accent-sat: 79%;
+  --color-accent-light: 65%;
+  --color-accent: hsl(var(--color-accent-hue), var(--color-accent-sat), var(--color-accent-light));
+
+  /* Neutral Colors */
+  --bg-app: hsl(210, 20%, 98%);
+  --bg-surface: hsla(0, 0%, 100%, 0.7);
+  --bg-surface-solid: hsl(0, 0%, 100%);
+  --border-color: hsla(210, 14%, 89%, 0.6);
+  --border-color-solid: hsl(210, 14%, 89%);
+  
+  --text-primary: hsl(209, 28%, 15%);
+  --text-secondary: hsl(208, 12%, 42%);
+  --text-muted: hsl(208, 12%, 60%);
+  --text-on-primary: hsl(0, 0%, 100%);
+
+  /* Status Colors */
+  --color-success: hsl(145, 63%, 42%);
+  --color-success-alpha: hsla(145, 63%, 42%, 0.1);
+  --color-error: hsl(354, 70%, 54%);
+  --color-error-alpha: hsla(354, 70%, 54%, 0.1);
+  --color-warning: hsl(45, 93%, 47%);
+  --color-warning-alpha: hsla(45, 93%, 47%, 0.1);
+  --color-info: hsl(196, 80%, 45%);
+
+  /* Spacing Scale */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 64px;
+
+  /* Border Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 16px -4px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0, 0.03);
+
+  /* Fonts */
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
+
+  /* Fluid Type Scale */
+  --text-xs:    clamp(0.75rem, 1.5vw, 0.8rem);
+  --text-sm:    clamp(0.85rem, 1.8vw, 0.9rem);
+  --text-base:  clamp(0.95rem, 2vw, 1rem);
+  --text-lg:    clamp(1.1rem, 2.2vw, 1.2rem);
+  --text-xl:    clamp(1.25rem, 2.5vw, 1.5rem);
+  --text-2xl:   clamp(1.5rem, 3vw, 2rem);
+  --text-3xl:   clamp(2rem, 4vw, 2.8rem);
+
+  /* Icon sizes */
+  --icon-xs: 14px;
+  --icon-sm: 18px;
+  --icon-md: 24px;
+  --icon-lg: 32px;
+  --icon-xl: 40px;
+
+  /* Timing easing curves */
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce:  cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Hero visual sizes */
+  --font-size-hero-xl: clamp(2.8rem, 5vw + 1rem, 5.5rem);
+  --font-size-hero-sub: clamp(1rem, 2vw + 0.5rem, 1.35rem);
+
+  /* Grid & Shell Constants */
+  --max-width: 1200px;
+  --header-height: 70px;
+}
+
+/* Dark Mode Overrides */
+[data-theme="dark"] {
+  --bg-app: hsl(209, 33%, 8%);
+  --bg-surface: hsla(209, 33%, 12%, 0.7);
+  --bg-surface-solid: hsl(209, 33%, 12%);
+  --border-color: hsla(209, 30%, 18%, 0.5);
+  --border-color-solid: hsl(209, 30%, 18%);
+
+  --color-primary: hsl(174, 72%, 52%);
+  --color-accent: hsl(39, 85%, 72%);
+
+  --text-primary: hsl(210, 20%, 94%);
+  --text-secondary: hsl(210, 14%, 75%);
+  --text-muted: hsl(210, 10%, 55%);
+  --text-on-primary: hsl(209, 33%, 8%);
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 16px -4px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 20px 24px -4px rgba(0, 0, 0, 0.4), 0 8px 8px -4px rgba(0, 0, 0, 0.3);
+
+  --pill-bg: hsla(209, 30%, 22%, 0.8);
+  --pill-border: hsla(209, 30%, 30%, 0.6);
+}

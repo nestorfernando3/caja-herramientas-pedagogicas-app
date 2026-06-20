@@ -1,0 +1,4 @@
+/* Master Stylesheet - Caja de Herramientas Pedagógicas */
+
+@import './variables.css';
+@import './app.css';
